@@ -1,4 +1,4 @@
-package com.example.mrgan.listviewtest;
+package com.example.mrgan.design;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

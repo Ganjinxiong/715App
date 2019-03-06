@@ -1,4 +1,4 @@
-package com.example.mrgan.listviewtest;
+package com.example.mrgan.design;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.mrgan.design.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;

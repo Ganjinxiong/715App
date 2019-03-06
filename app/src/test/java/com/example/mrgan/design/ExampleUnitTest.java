@@ -1,4 +1,4 @@
-package com.example.mrgan.listviewtest;
+package com.example.mrgan.design;
 
 import org.junit.Test;
 
