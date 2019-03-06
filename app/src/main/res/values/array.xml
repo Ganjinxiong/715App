@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="spinnerselect1">
+        <item>一年级</item>
+        <item>二年级</item>
+        <item>三年级</item>
+        <item>四年级</item>
+        <item>五年级</item>
+        <item>六年级</item>
+    </string-array>
+
+    <string-array name="spinnerselect2">
+        <item>加法</item>
+        <item>减法</item>
+    </string-array>
+
+</resources>
