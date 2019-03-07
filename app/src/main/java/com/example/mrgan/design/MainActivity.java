@@ -3,6 +3,7 @@ package com.example.mrgan.design;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -122,12 +123,12 @@ public class MainActivity extends AppCompatActivity {
 
         //口算练习模块
         startPracticeBt = (Button)findViewById(R.id.button1);
-        grade = spinner1.getSelectedItem().toString();
-        type = spinner2.getSelectedItem().toString();
         startPracticeBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,PracticeActivity.class);
+                grade = spinner1.getSelectedItem().toString();
+                type = spinner2.getSelectedItem().toString();
                 intent.putExtra("grade",grade);
                 intent.putExtra("type",type);
                 startActivity(intent);
