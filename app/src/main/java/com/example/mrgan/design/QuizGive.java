@@ -1,8 +1,8 @@
 package com.example.mrgan.design;
 
 public class QuizGive {
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    private String Label;
+    public QuizGive(String label){
+        label=Label;
     }
 }
