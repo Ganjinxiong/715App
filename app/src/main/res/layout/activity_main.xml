@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
+    android:background="@drawable/beijing1"
     tools:context="com.example.mrgan.design.MainActivity">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorPrimary"
+
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:text="每日一练"
             android:textSize="48dp" />
@@ -34,10 +35,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="100dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@android:color/background_light"
+            android:background="#80FFFFFF"
             android:orientation="vertical">
 
             <LinearLayout
@@ -150,7 +151,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@android:color/background_light"
+            android:background="#80FFFFFF"
             android:orientation="vertical">
 
             <LinearLayout
@@ -184,7 +185,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:background="@android:color/background_light"
+            android:background="#80FFFFFF"
             android:orientation="vertical">
 
             <LinearLayout

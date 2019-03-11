@@ -1,5 +1,6 @@
 package com.example.mrgan.design;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Handler;
@@ -20,39 +21,72 @@ import android.widget.TextView;
 import java.lang.ref.WeakReference;
 
 //口算练习模块
-public  class PracticeActivity extends AppCompatActivity {
+public class PracticeActivity extends AppCompatActivity {
 
     private Intent intent;
-    private String grade,type;
-    private int maxLevel,minLevel,nowLevel,firstNum,secondNum,result,answer;
+    private String grade, type;
+    private int maxLevel, minLevel, nowLevel, firstNum, secondNum, result, answer;
     private IntergerNumber intergerNumber;
-    private TextView typeTextView,firstTextView,secondTextView;
+    private TextView nowTextView, lastTextView, nextTextView;
     private EditText answerEditText;
     private ImageView judgeImage;
-    private Button exitButton,skipButton;
+    private Button exitButton, skipButton;
     private MyHandler handler;
     private ActionBar actionBar;
+    private Boolean isfirst;
 
-    public void createQuestion(){
-        judgeImage.setVisibility(View.INVISIBLE);
+
+    public void createQuestion() {
+
+
         answerEditText.setText("");
         intergerNumber = new IntergerNumber(0);
+
+        //是否第一次出题，是就不显示上次的题目
+        if (isfirst) {
+            firstNum = intergerNumber.createNumber();
+            secondNum = intergerNumber.createNumber();
+            switch (type) {
+                case "加法":
+                    nowTextView.setText(firstNum + "+" + secondNum + "=");
+                    result = firstNum + secondNum;
+                    break;
+                case "减法":
+                    while (firstNum < secondNum)
+                        secondNum = intergerNumber.createNumber();
+                    nowTextView.setText(firstNum + "-" + secondNum + "=");
+                    result = firstNum - secondNum;
+                    break;
+            }
+            isfirst = false;
+        } else {
+            judgeImage.setImageResource(R.drawable.xie2);
+            lastTextView.setText(nowTextView.getText().toString() + result);
+            nowTextView.setText(nextTextView.getText().toString().substring(0, nextTextView.getText().toString().length() - 1));
+            switch (type) {
+                case "加法":
+                    result = firstNum + secondNum;
+                    break;
+                case "减法":
+                    result = firstNum - secondNum;
+                    break;
+            }
+        }
+
+        //下一题
         firstNum = intergerNumber.createNumber();
         secondNum = intergerNumber.createNumber();
         switch (type) {
             case "加法":
-                typeTextView.setText("+");
-                result = firstNum+secondNum;
+                nextTextView.setText(firstNum + "+" + secondNum + "=?");
                 break;
             case "减法":
-                typeTextView.setText("-");
-                while (firstNum<secondNum)
+                while (firstNum < secondNum)
                     secondNum = intergerNumber.createNumber();
-                result = firstNum-secondNum;
+                nextTextView.setText(firstNum + "-" + secondNum + "=?");
                 break;
         }
-        firstTextView.setText(firstNum + "");
-        secondTextView.setText(secondNum + "");
+
     }
 
     static class MyHandler extends Handler {
@@ -65,7 +99,10 @@ public  class PracticeActivity extends AppCompatActivity {
         @Override
         public void handleMessage(Message msg) {
             PracticeActivity theActivity = mActivity.get();
-            switch (msg.what){
+            switch (msg.what) {
+                case 0:
+                    theActivity.createQuestion();
+                    break;
                 case 1:
                     SystemClock.sleep(1000);
                     theActivity.createQuestion();
@@ -80,13 +117,15 @@ public  class PracticeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
-        firstTextView = findViewById(R.id.firstTextView);
-        secondTextView = findViewById(R.id.secondTextView);
-        typeTextView = findViewById(R.id.typeTextView);
+
         judgeImage = findViewById(R.id.judge);
         answerEditText = findViewById(R.id.answer);
-        exitButton =findViewById(R.id.exit);
-        skipButton =findViewById(R.id.skip);
+        exitButton = findViewById(R.id.exit);
+        skipButton = findViewById(R.id.skip);
+        nowTextView = findViewById(R.id.now);
+        lastTextView = findViewById(R.id.last);
+        nextTextView = findViewById(R.id.next);
+
 
         //接收数据
         intent = getIntent();
@@ -104,16 +143,19 @@ public  class PracticeActivity extends AppCompatActivity {
 
 
         //隐藏标题栏
-        actionBar=getSupportActionBar();
-        if (actionBar!=null)
+        actionBar = getSupportActionBar();
+        if (actionBar != null)
             actionBar.hide();
 
-        //判断对错，进行下一题
-        handler =new MyHandler(this);
+        //初始化题目
+        handler = new MyHandler(this);
+        isfirst = true;
         Message message = new Message();
-        message.what = 1;
+        message.what = 0;
         handler.sendMessage(message);
-        createQuestion();
+
+
+        //判断对错，进行下一题
         answerEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -131,7 +173,6 @@ public  class PracticeActivity extends AppCompatActivity {
                     answer = Integer.parseInt(s.toString());
                     if (answer == result) {
                         judgeImage.setImageResource(R.drawable.dui);
-                        judgeImage.setVisibility(View.VISIBLE);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -141,8 +182,7 @@ public  class PracticeActivity extends AppCompatActivity {
                             }
                         }).start();
                     } else {
-                          judgeImage.setImageResource(R.drawable.cuo);
-                          judgeImage.setVisibility(View.VISIBLE);
+                        judgeImage.setImageResource(R.drawable.cuo);
                     }
                 }
             }
@@ -157,6 +197,7 @@ public  class PracticeActivity extends AppCompatActivity {
             }
         });
 
+        //退出
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
