@@ -12,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public  class PracticeActivity extends AppCompatActivity {
     private TextView typeTextView,firstTextView,secondTextView;
     private EditText answerEditText;
     private ImageView judgeImage;
+    private Button exitButton,skipButton;
     private MyHandler handler;
     private ActionBar actionBar;
 
@@ -78,7 +80,15 @@ public  class PracticeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice);
+        firstTextView = findViewById(R.id.firstTextView);
+        secondTextView = findViewById(R.id.secondTextView);
+        typeTextView = findViewById(R.id.typeTextView);
+        judgeImage = findViewById(R.id.judge);
+        answerEditText = findViewById(R.id.answer);
+        exitButton =findViewById(R.id.exit);
+        skipButton =findViewById(R.id.skip);
 
+        //接收数据
         intent = getIntent();
         grade = intent.getStringExtra("grade");
         type = intent.getStringExtra("type");
@@ -92,21 +102,18 @@ public  class PracticeActivity extends AppCompatActivity {
                 break;
         }
 
-        firstTextView = findViewById(R.id.firstTextView);
-        secondTextView = findViewById(R.id.secondTextView);
-        typeTextView = findViewById(R.id.typeTextView);
-        judgeImage = findViewById(R.id.judge);
-        answerEditText = findViewById(R.id.answer);
+
+        //隐藏标题栏
+        actionBar=getSupportActionBar();
+        if (actionBar!=null)
+            actionBar.hide();
+
+        //判断对错，进行下一题
         handler =new MyHandler(this);
         Message message = new Message();
         message.what = 1;
         handler.sendMessage(message);
         createQuestion();
-
-        actionBar=getSupportActionBar();
-        if (actionBar!=null)
-            actionBar.hide();
-
         answerEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -141,6 +148,21 @@ public  class PracticeActivity extends AppCompatActivity {
             }
         });
 
+
+        //跳过这题
+        skipButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createQuestion();
+            }
+        });
+
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
     }
 }
