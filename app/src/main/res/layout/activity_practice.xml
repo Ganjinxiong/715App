@@ -45,14 +45,23 @@
                 android:layout_height="wrap_content"
                 android:text="="
                 android:textSize="50sp"/>
-            <TextView
-                android:id="@+id/textView12"
+            <EditText
+                android:id="@+id/answer"
                 android:layout_width="100dp"
                 android:layout_height="80dp"
+                android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:text=""
+                android:inputType="number"
                 android:background="@drawable/fangkuang3"
                 android:textSize="50sp"/>
+
+            <ImageView
+                android:id="@+id/judge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                app:srcCompat="@drawable/dui" />
         </LinearLayout>
 
     </LinearLayout>
