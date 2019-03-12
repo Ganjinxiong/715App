@@ -70,7 +70,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:paddingLeft="30dp"
             android:background="#8087DEFA"
             android:gravity="center"
@@ -107,7 +107,7 @@
             android:id="@+id/next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10sp"
+            android:layout_marginTop="8sp"
             android:layout_gravity="center"
             android:text="7+8=?"
             android:textSize="40sp"
