@@ -41,20 +41,26 @@ public class QuizGive {
             case "加法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeOnePlus0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeOnePlus1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeOnePlus2();
                         break;
                 }
                 break;
             case "减法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeOneMinus0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeOneMinus1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeOneMinus2();
                         break;
                 }
                 break;
