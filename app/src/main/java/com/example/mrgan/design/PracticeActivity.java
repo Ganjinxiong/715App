@@ -24,8 +24,9 @@ import java.lang.ref.WeakReference;
 public class PracticeActivity extends AppCompatActivity {
 
     private Intent intent;
-    private String grade, type;
-    private int maxLevel, minLevel, nowLevel, firstNum, secondNum, result, answer;
+    private String grade, type,question;
+    private String[] questionItem;
+    private int maxLevel, minLevel, nowLevel, firstNum, secondNum, result, answer,correct;
     private IntergerNumber intergerNumber;
     private TextView nowTextView, lastTextView, nextTextView;
     private EditText answerEditText;
@@ -34,59 +35,42 @@ public class PracticeActivity extends AppCompatActivity {
     private MyHandler handler;
     private ActionBar actionBar;
     private Boolean isfirst;
+    private QuizGive quizGive;
 
 
-    public void createQuestion() {
 
-
+    public void createQuestion(){
         answerEditText.setText("");
-        intergerNumber = new IntergerNumber(0);
-
-        //是否第一次出题，是就不显示上次的题目
+        //是否第一次出题，是就出两次题，不显示上次的题目
         if (isfirst) {
-            firstNum = intergerNumber.createNumber();
-            secondNum = intergerNumber.createNumber();
-            switch (type) {
-                case "加法":
-                    nowTextView.setText(firstNum + "+" + secondNum + "=");
-                    result = firstNum + secondNum;
-                    break;
-                case "减法":
-                    while (firstNum < secondNum)
-                        secondNum = intergerNumber.createNumber();
-                    nowTextView.setText(firstNum + "-" + secondNum + "=");
-                    result = firstNum - secondNum;
-                    break;
-            }
+            quizGive = new QuizGive(grade,type,nowLevel);
+            question = quizGive.Give();
+            nowTextView.setText(question);
             isfirst = false;
         } else {
             judgeImage.setImageResource(R.drawable.xie2);
             lastTextView.setText(nowTextView.getText().toString() + result);
-            nowTextView.setText(nextTextView.getText().toString().substring(0, nextTextView.getText().toString().length() - 1));
-            switch (type) {
-                case "加法":
-                    result = firstNum + secondNum;
-                    break;
-                case "减法":
-                    result = firstNum - secondNum;
-                    break;
-            }
+            nowTextView.setText(question);
         }
-
-        //下一题
-        firstNum = intergerNumber.createNumber();
-        secondNum = intergerNumber.createNumber();
+        //算出本题答案
         switch (type) {
             case "加法":
-                nextTextView.setText(firstNum + "+" + secondNum + "=?");
+                questionItem = question.substring(0,question.length()-1).split("\\+");
+                firstNum = Integer.parseInt(questionItem[0]);
+                secondNum = Integer.parseInt(questionItem[1]);
+                result = firstNum + secondNum;
                 break;
             case "减法":
-                while (firstNum < secondNum)
-                    secondNum = intergerNumber.createNumber();
-                nextTextView.setText(firstNum + "-" + secondNum + "=?");
+                questionItem = question.substring(0,question.length()-1).split("\\-");
+                firstNum = Integer.parseInt(questionItem[0]);
+                secondNum = Integer.parseInt(questionItem[1]);
+                result = firstNum - secondNum;
                 break;
         }
-
+        //下一题
+        quizGive = new QuizGive(grade,type,nowLevel);
+        question = quizGive.Give();
+        nextTextView.setText(question+"?");
     }
 
     static class MyHandler extends Handler {
@@ -131,15 +115,10 @@ public class PracticeActivity extends AppCompatActivity {
         intent = getIntent();
         grade = intent.getStringExtra("grade");
         type = intent.getStringExtra("type");
-        switch (grade) {
-            case "一年级":
-                maxLevel = 3;
-                minLevel = 0;
-                nowLevel = minLevel;
-                break;
-            default:
-                break;
-        }
+        maxLevel = 4;
+        minLevel = 0;
+        nowLevel = minLevel;
+
 
 
         //隐藏标题栏
@@ -150,6 +129,7 @@ public class PracticeActivity extends AppCompatActivity {
         //初始化题目
         handler = new MyHandler(this);
         isfirst = true;
+        correct = 0 ;
         Message message = new Message();
         message.what = 0;
         handler.sendMessage(message);
@@ -173,6 +153,11 @@ public class PracticeActivity extends AppCompatActivity {
                     answer = Integer.parseInt(s.toString());
                     if (answer == result) {
                         judgeImage.setImageResource(R.drawable.dui);
+                        correct ++;
+                        if (correct >=5 && nowLevel<maxLevel){
+                            correct = 0;
+                            nowLevel++;
+                        }
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -193,6 +178,10 @@ public class PracticeActivity extends AppCompatActivity {
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                correct = 0 ;
+                if (nowLevel>minLevel){
+                    nowLevel--;
+                }
                 createQuestion();
             }
         });
