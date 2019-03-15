@@ -1,6 +1,7 @@
 package com.example.mrgan.design;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,12 +29,17 @@ public class MainActivity extends AppCompatActivity {
     private List<CharSequence> list1,list2;
     private ArrayAdapter<CharSequence> adapter1,adapter2;
     private Intent intent;
-
+    private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //隐藏标题栏
+        actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.hide();
 
         //spinner数据绑定
         spinner1 = (Spinner)findViewById(R.id.spinner1);
@@ -126,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         startPracticeBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,PracticeActivity.class);
+                intent = new Intent(MainActivity.this,PracticeActivity.class);
                 grade = spinner1.getSelectedItem().toString();
                 type = spinner2.getSelectedItem().toString();
                 intent.putExtra("grade",grade);
