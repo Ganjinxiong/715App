@@ -18,7 +18,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class ExamActivity extends AppCompatActivity {
 
     private Intent intent;
-    private String grade,type,question,answerStr;
+    private String grade,type,question,answerStr,showStr;
     private String[] questionItem;
     private int nowLevel,ran,firstNum,secondNum,result,answer,trueCount,totalCount,mark;
     private QuizGive quizGive;
@@ -26,9 +26,36 @@ public class ExamActivity extends AppCompatActivity {
     private EditText answerEditText;
     private ActionBar actionBar;
     private Button exitButton, skipButton;
+    private Long startTime,endTime,usedTime,usedMin,usedSec;
+
+    //显示得分和用时
+    private void showResult(){
+        mark = trueCount*4;
+        endTime = System.currentTimeMillis();
+        usedTime = (endTime - startTime)/1000;
+        usedMin = usedTime/60;
+        usedSec = usedTime%60;
+        if (usedTime >= 60 )
+            showStr = "用时"+usedMin+"分"+usedSec+"秒";
+           else
+            showStr = "用时"+usedSec+"秒";
+        new SweetAlertDialog(ExamActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                .setTitleText(mark+"分")
+                .setContentText(showStr)
+                .setConfirmText("退出测验")
+                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sDialog) {
+                        sDialog.dismissWithAnimation();
+                        finish();
+                    }
+                })
+                .show();
+    }
+
 
     //随机出题类型
-    public String randomType(String grade){
+    private String randomType(String grade){
         if (grade.equals("一年级")) {
             ran =(int)(Math.random()*2);
             switch (ran){
@@ -112,6 +139,7 @@ public class ExamActivity extends AppCompatActivity {
         numTextView = findViewById(R.id.questionNum);
         exitButton = findViewById(R.id.exit2);
         skipButton = findViewById(R.id.skip2);
+        startTime = System.currentTimeMillis();
 
         switch (grade){
             case "一年级":
@@ -130,22 +158,8 @@ public class ExamActivity extends AppCompatActivity {
                     if (answer == result)
                         trueCount++;
                 }
-                Log.d("aaa",trueCount+"");
-                Log.d("aaaa",answer+"");
-                Log.d("aaaaa",result+"");
                 if (totalCount == 25) {
-                        mark = trueCount*4;
-                    new SweetAlertDialog(ExamActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                            .setTitleText(mark+"分")
-                            .setConfirmText("退出测验")
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismissWithAnimation();
-                                    finish();
-                                }
-                            })
-                            .show();
+                     showResult();
                 }else {
                     totalCount++;
                     createQuestion();
@@ -159,18 +173,7 @@ public class ExamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (totalCount == 25) {
-                    mark = trueCount*4;
-                    new SweetAlertDialog(ExamActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                            .setTitleText(mark+"分")
-                            .setConfirmText("退出测验")
-                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                                @Override
-                                public void onClick(SweetAlertDialog sDialog) {
-                                    sDialog.dismissWithAnimation();
-                                    finish();
-                                }
-                            })
-                            .show();
+                    showResult();
                 } else {
                     totalCount++;
                     createQuestion();
