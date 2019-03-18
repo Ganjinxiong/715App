@@ -20,12 +20,12 @@ import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private View item1,item1_1,item1_2,item1_3;
+    private View item1,item1_1,item1_2,item1_3,item2,item2_1,item2_2;
     private TextView dateText;
-    private Spinner spinner1,spinner2;
+    private Spinner spinner1,spinner2,spinner3;
     private int year,month,day,week;
     private String grade,type;
-    private Button startPracticeBt;
+    private Button startPracticeBt,startExamBt;
     private List<CharSequence> list1,list2;
     private ArrayAdapter<CharSequence> adapter1,adapter2;
     private Intent intent;
@@ -42,8 +42,9 @@ public class MainActivity extends AppCompatActivity {
             actionBar.hide();
 
         //spinner数据绑定
-        spinner1 = (Spinner)findViewById(R.id.spinner1);
-        spinner2= (Spinner)findViewById(R.id.spinner2);
+        spinner1 = findViewById(R.id.spinner1);
+        spinner2= findViewById(R.id.spinner2);
+        spinner3 = findViewById(R.id.spinner3);
         list1 = new ArrayList<>();
         list1.add("加法");
         list1.add("减法");
@@ -92,8 +93,34 @@ public class MainActivity extends AppCompatActivity {
                     item1_2.setVisibility(View.VISIBLE);
                     item1_3 .setVisibility(View.VISIBLE);
                 }
+                item2_1.setVisibility(View.GONE);
+                item2_2.setVisibility(View.GONE);
             }
         });
+
+        item2 = (View)findViewById(R.id.item2);
+        item2_1 = (View)findViewById(R.id.item2_1);
+        item2_2 = (View)findViewById(R.id.item2_2);
+        item2_1.setVisibility(View.GONE);
+        item2_2.setVisibility(View.GONE);
+        item2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (item2_1.getVisibility()==View.VISIBLE){
+                    item2_1.setVisibility(View.GONE);
+                    item2_2.setVisibility(View.GONE);
+                }
+                else {
+                    item2_1.setVisibility(View.VISIBLE);
+                    item2_2.setVisibility(View.VISIBLE);
+                }
+                item1_1.setVisibility(View.GONE);
+                item1_2.setVisibility(View.GONE);
+                item1_3.setVisibility(View.GONE);
+            }
+        });
+
+
         //显示当前日期
         dateText = (TextView)findViewById(R.id.textView8);
         Date now = new Date();
@@ -140,5 +167,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        startExamBt = findViewById(R.id.button2);
+        startExamBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent = new Intent(MainActivity.this,ExamActivity.class);
+                grade = spinner3.getSelectedItem().toString();
+                intent.putExtra("grade",grade);
+                startActivity(intent);
+            }
+        });
+
+
+
     }
 }

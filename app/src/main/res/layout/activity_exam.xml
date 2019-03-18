@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/beijing4"
-    tools:context="com.example.mrgan.design.PracticeActivity">
+    tools:context=".ExamActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,87 +15,92 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/exit"
+                android:id="@+id/exit2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"
-                android:layout_marginLeft="20dp"
                 android:background="#00FFFFFF"
                 android:text="返回"
                 android:textSize="22sp" />
 
+            <TextView
+                android:id="@+id/questionNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:gravity="right"
+                android:text="1"
+                android:textSize="25sp"/>
+
+            <TextView
+                android:id="@+id/total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:gravity="left"
+                android:text="/25题"
+                android:textSize="25sp"/>
 
             <Button
-                android:id="@+id/skip"
+                android:id="@+id/skip2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="right"
-                android:layout_marginRight="20dp"
                 android:background="#00FFFFFF"
                 android:text="跳过"
                 android:textSize="22sp" />
         </LinearLayout>
 
-        <TextView
-                android:id="@+id/last"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="35dp"
-                android:layout_gravity="center"
-                android:text=""
-                android:textSize="40sp"
-                android:textColor="@android:color/darker_gray"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="90dp"
             android:paddingLeft="30dp"
-            android:background="#8087DEFA"
+            android:background="#8031C27C"
             android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/now"
+                android:id="@+id/now2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="100+100="
                 android:textSize="45sp" />
 
             <EditText
-                android:id="@+id/answer"
+                android:id="@+id/answer2"
                 android:layout_width="80dp"
                 android:layout_height="70dp"
                 android:layout_marginLeft="5dp"
                 android:gravity="center"
                 android:text=""
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:background="@drawable/fangkuang3"
                 android:textSize="45sp"
                 />
 
-            <ImageView
-                android:id="@+id/judge"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                app:srcCompat="@drawable/xie2" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/next"
-            android:layout_width="wrap_content"
+            android:id="@+id/next2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8sp"
-            android:layout_gravity="center"
-            android:text="7+8=?"
-            android:textSize="40sp"
-            android:textColor="@android:color/darker_gray"/>
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="250dp"
+            android:paddingLeft="10dp"
+            android:text="下一题 >>"
+            android:textSize="30sp"
+            android:background="#8031C27C"/>
+
+
     </LinearLayout>
+
+
+
+
 </android.support.constraint.ConstraintLayout>

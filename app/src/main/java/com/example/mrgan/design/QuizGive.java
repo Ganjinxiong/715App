@@ -12,7 +12,7 @@ public class QuizGive {
         Level=level;
     }
 
-    public String Give() {
+    public String give() {
         switch (gradeLabel) {
             case "一年级":
                 quiz = GradeOne();

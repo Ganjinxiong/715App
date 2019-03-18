@@ -20,6 +20,8 @@ import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 //口算练习模块
 public class PracticeActivity extends AppCompatActivity {
 
@@ -27,7 +29,6 @@ public class PracticeActivity extends AppCompatActivity {
     private String grade, type,question;
     private String[] questionItem;
     private int maxLevel, minLevel, nowLevel, firstNum, secondNum, result, answer,correct;
-    private IntergerNumber intergerNumber;
     private TextView nowTextView, lastTextView, nextTextView;
     private EditText answerEditText;
     private ImageView judgeImage;
@@ -41,10 +42,11 @@ public class PracticeActivity extends AppCompatActivity {
 
     public void createQuestion(){
         answerEditText.setText("");
+        answer = 9999;
         //是否第一次出题，是就出两次题，不显示上次的题目
         if (isfirst) {
             quizGive = new QuizGive(grade,type,nowLevel);
-            question = quizGive.Give();
+            question = quizGive.give();
             nowTextView.setText(question);
             isfirst = false;
         } else {
@@ -61,7 +63,7 @@ public class PracticeActivity extends AppCompatActivity {
                 result = firstNum + secondNum;
                 break;
             case "减法":
-                questionItem = question.substring(0,question.length()-1).split("\\-");
+                questionItem = question.substring(0,question.length()-1).split("-");
                 firstNum = Integer.parseInt(questionItem[0]);
                 secondNum = Integer.parseInt(questionItem[1]);
                 result = firstNum - secondNum;
@@ -69,7 +71,7 @@ public class PracticeActivity extends AppCompatActivity {
         }
         //下一题
         quizGive = new QuizGive(grade,type,nowLevel);
-        question = quizGive.Give();
+        question = quizGive.give();
         nextTextView.setText(question+"?");
     }
 
@@ -190,7 +192,25 @@ public class PracticeActivity extends AppCompatActivity {
         exitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                new SweetAlertDialog(PracticeActivity.this, SweetAlertDialog.WARNING_TYPE)
+                        .setTitleText("要退出练习吗？")
+                        .setCancelText("是，退出练习")
+                        .setConfirmText("不，继续练习")
+                        .showCancelButton(true)
+                        .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.cancel();
+                                finish();
+                            }
+                        })
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sDialog) {
+                                sDialog.dismissWithAnimation();
+                            }
+                        })
+                        .show();
             }
         });
 
