@@ -144,7 +144,36 @@ public class Quizs {
         if((num1*num2)<num3){
             num3=getNumInRange(1,9);
         }
-        quiz=num1+"*"+num2+"+"+num3+"=";
+        quiz=num1+"*"+num2+"-"+num3+"=";
+        return quiz;
+    }
+
+    public String GradeTwoDiv0(){//乘法口诀范围内的除法
+        num1=getNumInRange(1,9);//除数
+        num2=getNumInRange(1,9);//商
+        tmp=num1*num2;//被除数
+        quiz=tmp+"/"+num1+"=";
+        return quiz;
+    }
+
+    public String GradeTwoDiv1(){//除完后加一个数
+        num1=getNumInRange(1,9);//除数
+        num2=getNumInRange(1,9);//商
+        tmp=num1*num2;//被除数
+        num3=getNumInRange(1,99);//加数
+        quiz=tmp+"/"+num1+"+"+num3+"=";
+        return quiz;
+    }
+
+    public String GradeTwoDiv2(){//除完后减一位数
+        num1=getNumInRange(1,9);//除数
+        num2=getNumInRange(1,9);//商
+        tmp=num1*num2;//被除数
+        num3=getNumInRange(1,9);//减数
+        while(num3>num2){
+            num3=getNumInRange(1,9);
+        }
+        quiz=tmp+"/"+num1+"-"+num3+"=";
         return quiz;
     }
 
