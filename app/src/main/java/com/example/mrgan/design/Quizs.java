@@ -6,6 +6,7 @@ public class Quizs {
     int num2=0;
     int num3=0;
     int tmp=0;
+    int answer=0;
 
     public int getNumInRange(int min,int max){
         int result=(int)(min+Math.random()*(max-min+1));
@@ -180,21 +181,24 @@ public class Quizs {
     public String GradeThreePlus0(){//几百几十加几百几十
         num1=getNumInRange(11,99)*10;
         num2=getNumInRange(11,99)*10;
-        quiz=num1+"+"+num2+"=";
+        answer=num1+num2;
+        quiz=num1+"+"+num2+"="+answer;
         return quiz;
     }
 
     public String GradeThreePlus1(){//任意三位数加几百几十
         num1=getNumInRange(100,999);
         num2=getNumInRange(11,99)*10;
-        quiz=num1+"+"+num2+"=";
+        answer=num1+num2;
+        quiz=num1+"+"+num2+"="+answer;
         return quiz;
     }
 
     public String GradeThreePlus2(){//任意三位数加任意三位数
         num1=getNumInRange(100,999);
         num2=getNumInRange(100,999);
-        quiz=num1+"+"+num2+"=";
+        answer=num1+num2;
+        quiz=num1+"+"+num2+"="+answer;
         return quiz;
     }
 
@@ -206,7 +210,8 @@ public class Quizs {
             num2=num1;
             num1=tmp;
         }
-        quiz=num1+"-"+num2+"=";
+        answer=num1-num2;
+        quiz=num1+"-"+num2+"="+answer;
         return quiz;
     }
 
@@ -216,7 +221,8 @@ public class Quizs {
         while(num2>num1){
             num2=getNumInRange(10,99)*10;
         }
-        quiz=num1+"-"+num2+"=";
+        answer=num1-num2;
+        quiz=num1+"-"+num2+"="+answer;
         return quiz;
     }
 
@@ -228,28 +234,32 @@ public class Quizs {
             num2=num1;
             num1=tmp;
         }
-        quiz=num1+"-"+num2+"=";
+        answer=num1-num2;
+        quiz=num1+"-"+num2+"="+answer;
         return quiz;
     }
 
     public String GradeThreeMul0(){//整十数乘一位数
         num1=getNumInRange(1,9)*10;
         num2=getNumInRange(2,9);
-        quiz=num1+"*"+num2+"=";
+        answer=num1*num2;
+        quiz=num1+"*"+num2+"="+answer;
         return quiz;
     }
 
     public String GradeThreeMul1(){//两位数乘一位数
         num1=getNumInRange(11,99);
         num2=getNumInRange(2,9);
-        quiz=num1+"*"+num2+"=";
+        answer=num1*num2;
+        quiz=num1+"*"+num2+"="+answer;
         return quiz;
     }
 
     public String GradeThreeMul2(){//两位数乘整十数
         num1=getNumInRange(11,99);
         num2=getNumInRange(1,9)*10;
-        quiz=num1+"*"+num2+"=";
+        answer=num1*num2;
+        quiz=num1+"*"+num2+"="+answer;
         return quiz;
     }
 
@@ -259,7 +269,8 @@ public class Quizs {
         while(num1%num2!=0){
             num2=getNumInRange(1,9);
         }
-        quiz=num1+"/"+num2+"=";
+        answer=num1/num2;
+        quiz=num1+"/"+num2+"="+answer;
         return quiz;
     }
 
@@ -269,7 +280,8 @@ public class Quizs {
         while(num1%num2!=0){
             num2=getNumInRange(1,9);
         }
-        quiz=num1+"/"+num2+"=";
+        answer=num1/num2;
+        quiz=num1+"/"+num2+"="+answer;
         return quiz;
     }
 
@@ -279,7 +291,8 @@ public class Quizs {
         while(num1%num2!=0){
             num2=getNumInRange(1,9);
         }
-        quiz=num1+"/"+num2+"=";
+        answer=num1/num2;
+        quiz=num1+"/"+num2+"="+answer;
         return quiz;
     }
 
