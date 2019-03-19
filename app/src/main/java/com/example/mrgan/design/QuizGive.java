@@ -85,40 +85,52 @@ public class QuizGive {
             case "加法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeTwoPlus0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeTwoPlus1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeTwoPlus2();
                         break;
                 }
                 break;
             case "减法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeTwoMinus0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeTwoMinus1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeTwoMinus2();
                         break;
                 }
                 break;
             case "乘法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeTwoMul0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeTwoMul1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeTwoMul2();
                         break;
                 }
                 break;
             case "除法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeTwoDiv0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeTwoDiv1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeTwoDiv2();
                         break;
                 }
                 break;
@@ -175,40 +187,52 @@ public class QuizGive {
             case "加法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeFourPlus0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeFourPlus1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeFourPlus2();
                         break;
                 }
                 break;
             case "减法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeFourMinus0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeFourMinus1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeFourMinus2();
                         break;
                 }
                 break;
             case "乘法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeFourMul0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeFourMul1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeFourMul2();
                         break;
                 }
                 break;
             case "除法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeFourDiv0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeFourDiv1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeFourDiv2();
                         break;
                 }
                 break;

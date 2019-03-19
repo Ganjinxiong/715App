@@ -26,53 +26,47 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class PracticeActivity extends AppCompatActivity {
 
     private Intent intent;
-    private String grade, type,question;
+    private String grade, type,question,questionStr,result, answer;
     private String[] questionItem;
-    private int maxLevel, minLevel, nowLevel, firstNum, secondNum, result, answer,correct;
+    private int maxLevel, minLevel, nowLevel, correct;
     private TextView nowTextView, lastTextView, nextTextView;
     private EditText answerEditText;
     private ImageView judgeImage;
     private Button exitButton, skipButton;
     private MyHandler handler;
+    private Message message;
     private ActionBar actionBar;
     private Boolean isfirst;
     private QuizGive quizGive;
 
 
 
+    @SuppressLint("SetTextI18n")
     public void createQuestion(){
         answerEditText.setText("");
-        answer = 9999;
+        answer = "xxx";
         //是否第一次出题，是就出两次题，不显示上次的题目
         if (isfirst) {
+            Log.d("aaa",grade+type+nowLevel);
             quizGive = new QuizGive(grade,type,nowLevel);
             question = quizGive.give();
-            nowTextView.setText(question);
+            questionItem = question.split("=");
+            questionStr = questionItem[0]+"=";
+            nowTextView.setText(questionStr);
             isfirst = false;
         } else {
             judgeImage.setImageResource(R.drawable.xie2);
             lastTextView.setText(nowTextView.getText().toString() + result);
-            nowTextView.setText(question);
+            nowTextView.setText(questionStr);
         }
-        //算出本题答案
-        switch (type) {
-            case "加法":
-                questionItem = question.substring(0,question.length()-1).split("\\+");
-                firstNum = Integer.parseInt(questionItem[0]);
-                secondNum = Integer.parseInt(questionItem[1]);
-                result = firstNum + secondNum;
-                break;
-            case "减法":
-                questionItem = question.substring(0,question.length()-1).split("-");
-                firstNum = Integer.parseInt(questionItem[0]);
-                secondNum = Integer.parseInt(questionItem[1]);
-                result = firstNum - secondNum;
-                break;
-        }
+        //本题答案
+        result = questionItem[1];
         //下一题
         quizGive = new QuizGive(grade,type,nowLevel);
         question = quizGive.give();
-        nextTextView.setText(question+"?");
+        questionItem = question.split("=");
+        questionStr = questionItem[0]+"=";
+        nextTextView.setText(questionStr+"?");
     }
 
     static class MyHandler extends Handler {
@@ -117,7 +111,10 @@ public class PracticeActivity extends AppCompatActivity {
         intent = getIntent();
         grade = intent.getStringExtra("grade");
         type = intent.getStringExtra("type");
-        maxLevel = 4;
+        if (grade.equals("一年级"))
+            maxLevel = 4;
+        else
+            maxLevel = 2;
         minLevel = 0;
         nowLevel = minLevel;
 
@@ -132,7 +129,7 @@ public class PracticeActivity extends AppCompatActivity {
         handler = new MyHandler(this);
         isfirst = true;
         correct = 0 ;
-        Message message = new Message();
+        message = new Message();
         message.what = 0;
         handler.sendMessage(message);
 
@@ -152,8 +149,8 @@ public class PracticeActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(final Editable s) {
                 if (!answerEditText.getText().toString().equals("")) {
-                    answer = Integer.parseInt(s.toString());
-                    if (answer == result) {
+                    answer = s.toString();
+                    if (answer.equals(result)) {
                         judgeImage.setImageResource(R.drawable.dui);
                         correct ++;
                         if (correct >=5 && nowLevel<maxLevel){
@@ -163,7 +160,7 @@ public class PracticeActivity extends AppCompatActivity {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                Message message = new Message();
+                                message = new Message();
                                 message.what = 1;
                                 handler.sendMessage(message);
                             }

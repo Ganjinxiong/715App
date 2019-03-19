@@ -1,6 +1,10 @@
 package com.example.mrgan.design;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -10,37 +14,46 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.lang.ref.WeakReference;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class ExamActivity extends AppCompatActivity {
 
     private Intent intent;
-    private String grade,type,question,answerStr,showStr;
+    private String grade, type, question, showStr, questionStr, result, answer;
     private String[] questionItem;
-    private int nowLevel,ran,firstNum,secondNum,result,answer,trueCount,totalCount,mark;
+    private int nowLevel, ran, trueCount, totalCount, mark;
     private QuizGive quizGive;
-    private TextView questionTextView,numTextView,nextTextView;
+    private TextView questionTextView, numTextView,lastTextView, lastResultTextView;
+    private ImageView judgeImageView, judgeImageView2,nextView;
     private EditText answerEditText;
     private ActionBar actionBar;
     private Button exitButton, skipButton;
-    private Long startTime,endTime,usedTime,usedMin,usedSec;
+    private Long startTime, endTime, usedTime, usedMin, usedSec;
+    private Boolean wrong;
+    private Handler handler;
+    private Message message;
+
 
     //显示得分和用时
-    private void showResult(){
-        mark = trueCount*4;
+    private void showResult() {
+        mark = trueCount * 4;
         endTime = System.currentTimeMillis();
-        usedTime = (endTime - startTime)/1000;
-        usedMin = usedTime/60;
-        usedSec = usedTime%60;
-        if (usedTime >= 60 )
-            showStr = "用时"+usedMin+"分"+usedSec+"秒";
-           else
-            showStr = "用时"+usedSec+"秒";
+        usedTime = (endTime - startTime) / 1000;
+        usedMin = usedTime / 60;
+        usedSec = usedTime % 60;
+        if (usedTime >= 60)
+            showStr = "用时" + usedMin + "分" + usedSec + "秒";
+        else
+            showStr = "用时" + usedSec + "秒";
         new SweetAlertDialog(ExamActivity.this, SweetAlertDialog.SUCCESS_TYPE)
-                .setTitleText(mark+"分")
+                .setTitleText(mark + "分")
                 .setContentText(showStr)
                 .setConfirmText("退出测验")
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
@@ -53,65 +66,109 @@ public class ExamActivity extends AppCompatActivity {
                 .show();
     }
 
+    //显示错误的题
+    @SuppressLint("SetTextI18n")
+    private void showWrong() {
+        lastTextView.setText(questionStr + answer);
+        lastResultTextView.setText(result);
+        judgeImageView.setVisibility(View.VISIBLE);
+        judgeImageView2.setVisibility(View.VISIBLE);
+    }
+
+    //隐藏过时的错题
+    @SuppressLint("SetTextI18n")
+    private void disWrong() {
+        lastTextView.setText("");
+        lastResultTextView.setText("");
+        judgeImageView.setVisibility(View.INVISIBLE);
+        judgeImageView2.setVisibility(View.INVISIBLE);
+    }
 
     //随机出题类型
-    private String randomType(String grade){
+    private String randomType(String grade) {
         if (grade.equals("一年级")) {
-            ran =(int)(Math.random()*2);
-            switch (ran){
+            ran = (int) (Math.random() * 2);
+            switch (ran) {
                 case 0:
                     return "加法";
                 default:
                     return "减法";
             }
-        }else {
-            ran =(int)(Math.random()*4);
-            switch (ran){
+        } else {
+            ran = (int) (Math.random() * 4);
+            switch (ran) {
                 case 0:
                     return "加法";
                 case 1:
                     return "减法";
                 case 2:
                     return "乘法";
-                    default:
-                        return "除法";
+                default:
+                    return "除法";
             }
         }
     }
 
-    private void createQuestion(){
-        if (totalCount>20){
-            nowLevel = 4;
-        }else if (totalCount>15){
-            nowLevel = 3;
-        }else if (totalCount>10){
-            nowLevel = 2;
-        }else if (totalCount>5){
-            nowLevel = 1;
+
+    //出题
+    @SuppressLint("SetTextI18n")
+    private void createQuestion() {
+        //难度调整
+        if (grade.equals("一年级")) {
+            if (totalCount > 20) {
+                nowLevel = 4;
+            } else if (totalCount > 15) {
+                nowLevel = 3;
+            } else if (totalCount > 10) {
+                nowLevel = 2;
+            } else if (totalCount > 5) {
+                nowLevel = 1;
+            }
+        } else {
+            if (totalCount > 17) {
+                nowLevel = 2;
+            } else if (totalCount > 9) {
+                nowLevel = 1;
+            }
         }
+        //随机类型
         type = randomType(grade);
-        quizGive = new QuizGive(grade,type,nowLevel);
-        question = quizGive.give();
         answerEditText.setText("");
-        questionTextView.setText(question);
-        numTextView.setText(totalCount+"");
-        answer = 9999;
-        //算出本题答案
-        switch (type) {
-            case "加法":
-                questionItem = question.substring(0,question.length()-1).split("\\+");
-                firstNum = Integer.parseInt(questionItem[0]);
-                secondNum = Integer.parseInt(questionItem[1]);
-                result = firstNum + secondNum;
-                break;
-            case "减法":
-                questionItem = question.substring(0,question.length()-1).split("-");
-                firstNum = Integer.parseInt(questionItem[0]);
-                secondNum = Integer.parseInt(questionItem[1]);
-                result = firstNum - secondNum;
-                break;
+        quizGive = new QuizGive(grade, type, nowLevel);
+        question = quizGive.give();
+        questionItem = question.split("=");
+        questionStr = questionItem[0] + "=";
+        questionTextView.setText(questionStr);
+        numTextView.setText(totalCount + "");
+        //本题答案
+        result = questionItem[1];
+    }
+
+    static class MyHandler extends Handler {
+        WeakReference<ExamActivity> mActivity;
+
+        MyHandler(ExamActivity activity) {
+            mActivity = new WeakReference<ExamActivity>(activity);
         }
 
+        @Override
+        public void handleMessage(Message msg) {
+            ExamActivity theActivity = mActivity.get();
+            switch (msg.what) {
+                case 0:
+                    theActivity.createQuestion();
+                    break;
+                case 1:
+                    theActivity.showWrong();
+                    break;
+                case 2:
+                    theActivity.disWrong();
+                    break;
+                default:
+                    theActivity.showResult();
+                    break;
+            }
+        }
     }
 
     @Override
@@ -127,42 +184,69 @@ public class ExamActivity extends AppCompatActivity {
         //接收数据
         intent = getIntent();
         grade = intent.getStringExtra("grade");
+
+        questionTextView = findViewById(R.id.now2);
+        nextView =findViewById(R.id.imageView4);
+        lastTextView = findViewById(R.id.last2);
+        lastResultTextView = findViewById(R.id.last3);
+        answerEditText = findViewById(R.id.answer2);
+        numTextView = findViewById(R.id.questionNum);
+        exitButton = findViewById(R.id.exit2);
+        skipButton = findViewById(R.id.skip2);
+        judgeImageView = findViewById(R.id.judge2);
+        judgeImageView2 = findViewById(R.id.judge3);
+
         //难度
         nowLevel = 0;
         //做对了多少
         trueCount = 0;
         //第几题
         totalCount = 1;
-        questionTextView = findViewById(R.id.now2);
-        nextTextView = findViewById(R.id.next2);
-        answerEditText = findViewById(R.id.answer2);
-        numTextView = findViewById(R.id.questionNum);
-        exitButton = findViewById(R.id.exit2);
-        skipButton = findViewById(R.id.skip2);
+        handler = new ExamActivity.MyHandler(this);
+        message = new Message();
+        message.what = 0;
+        handler.sendMessage(message);
+        wrong = false;
         startTime = System.currentTimeMillis();
 
-        switch (grade){
-            case "一年级":
-                createQuestion();
-                break;
-                default:
-                    break;
-        }
 
-        nextTextView.setOnClickListener(new View.OnClickListener() {
+        //下一题
+        nextView.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View v) {
-                answerStr = answerEditText.getText().toString();
-                if (!answerStr.equals("")) {
-                    answer = Integer.parseInt(answerStr);
-                    if (answer == result)
-                        trueCount++;
+                answer = answerEditText.getText().toString();
+                if (answer.equals(result)) {
+                    if (wrong) {
+                        message.what = 2;//错误过时隐藏
+                        message = new Message();
+                        handler.sendMessage(message);
+                        wrong =false;
+                    }
+                    trueCount++;
+                } else if (answer.equals("")) {
+                    if (wrong) {
+                        message = new Message();
+                        message.what = 2;//错误过时隐藏
+                        handler.sendMessage(message);
+                        wrong =false;
+                    }
+                } else {
+                    message = new Message();
+                    message.what = 1;//错误显示
+                    handler.sendMessage(message);
+                    wrong =true;
                 }
+
                 if (totalCount == 25) {
-                     showResult();
-                }else {
+                    message = new Message();
+                    message.what = 3;//结束
+                    handler.sendMessage(message);
+                } else {
                     totalCount++;
-                    createQuestion();
+                    message = new Message();
+                    message.what = 0;//出题
+                    handler.sendMessage(message);
                 }
             }
         });
@@ -173,10 +257,20 @@ public class ExamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (totalCount == 25) {
-                    showResult();
+                    message = new Message();
+                    message.what = 3;//结束
+                    handler.sendMessage(message);
                 } else {
+                    if (wrong) {
+                        message = new Message();
+                        message.what = 2;//错误显示
+                        handler.sendMessage(message);
+                        wrong =false;
+                    }
                     totalCount++;
-                    createQuestion();
+                    message = new Message();
+                    message.what = 0;//出题；
+                    handler.sendMessage(message);
                 }
             }
         });
@@ -205,9 +299,7 @@ public class ExamActivity extends AppCompatActivity {
                             }
                         })
                         .show();
-
             }
         });
     }
-
 }
