@@ -7,7 +7,7 @@ import java.text.DecimalFormat;
 
 public class Quizs {
     String quiz="";
-<<<<<<< HEAD
+
     int num1=0;
     int num2=0;
     int num3=0;
@@ -22,12 +22,9 @@ public class Quizs {
            num1 = num1 -num2;
         }
     }
-=======
-    int num1=0,num2=0,num3=0;
+    
     int tmp=0;
     double dbl1=0.00,dbl2=0.00,dbl3=0.00;
->>>>>>> 123
-
 
     public int getNumInRange(int min,int max){//获得[min,max]内的随机数
         int result=(int)(min+Math.random()*(max-min+1));
@@ -123,18 +120,6 @@ public class Quizs {
         quiz=num1+"-"+num2+"=";
         return quiz;
     }
-
-<<<<<<< HEAD
-=======
-
-
-
-
-
-
-
-
-
 
 
 
@@ -259,7 +244,4 @@ public class Quizs {
         return quiz;
     }
 
-
-
->>>>>>> 123
 }
