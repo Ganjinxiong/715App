@@ -115,10 +115,10 @@ public class QuizGive {
                         equation=new Quizs().GradeTwoDiv0();
                         break;
                     case 1:
-                        equation=new Quizs().GradeTwoDiv0();
+                        equation=new Quizs().GradeTwoDiv1();
                         break;
                     case 2:
-                        equation=new Quizs().GradeTwoDiv0();
+                        equation=new Quizs().GradeTwoDiv2();
                         break;
                 }
                 break;
