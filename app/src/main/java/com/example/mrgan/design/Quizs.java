@@ -1,4 +1,4 @@
-package com.example.mrgan.design;
+﻿package com.example.mrgan.design;
 
 
 
@@ -9,7 +9,11 @@ public class Quizs {
     String quiz="";
     int num1=0,num2=0,num3=0;
     int tmp=0;
+
     double dbl1=0.00,dbl2=0.00,dbl3=0.00;
+
+    int answer=0;
+
 
 
 
@@ -157,7 +161,154 @@ public class Quizs {
         if((num1*num2)<num3){
             num3=getNumInRange(1,9);
         }
-        quiz=num1+"*"+num2+"+"+num3+"=";
+        quiz=num1+"*"+num2+"-"+num3+"=";
+        return quiz;
+    }
+
+    public String GradeTwoDiv0(){//乘法口诀范围内的除法
+        num1=getNumInRange(1,9);//除数
+        num2=getNumInRange(1,9);//商
+        tmp=num1*num2;//被除数
+        quiz=tmp+"/"+num1+"=";
+        return quiz;
+    }
+
+    public String GradeTwoDiv1(){//除完后加一个数
+        num1=getNumInRange(1,9);//除数
+        num2=getNumInRange(1,9);//商
+        tmp=num1*num2;//被除数
+        num3=getNumInRange(1,99);//加数
+        quiz=tmp+"/"+num1+"+"+num3+"=";
+        return quiz;
+    }
+
+    public String GradeTwoDiv2(){//除完后减一位数
+        num1=getNumInRange(1,9);//除数
+        num2=getNumInRange(1,9);//商
+        tmp=num1*num2;//被除数
+        num3=getNumInRange(1,9);//减数
+        while(num3>num2){
+            num3=getNumInRange(1,9);
+        }
+        quiz=tmp+"/"+num1+"-"+num3+"=";
+        return quiz;
+    }
+
+    public String GradeThreePlus0(){//几百几十加几百几十
+        num1=getNumInRange(11,99)*10;
+        num2=getNumInRange(11,99)*10;
+        answer=num1+num2;
+        quiz=num1+"+"+num2+"="+answer;
+        return quiz;
+    }
+
+    public String GradeThreePlus1(){//任意三位数加几百几十
+        num1=getNumInRange(100,999);
+        num2=getNumInRange(11,99)*10;
+        answer=num1+num2;
+        quiz=num1+"+"+num2+"="+answer;
+        return quiz;
+    }
+
+    public String GradeThreePlus2(){//任意三位数加任意三位数
+        num1=getNumInRange(100,999);
+        num2=getNumInRange(100,999);
+        answer=num1+num2;
+        quiz=num1+"+"+num2+"="+answer;
+        return quiz;
+    }
+
+    public String GradeThreeMinus0(){//几百几十减几百几十
+        num1=getNumInRange(11,99)*10;
+        num2=getNumInRange(11,99)*10;
+        if(num2>num1){
+            tmp=num2;
+            num2=num1;
+            num1=tmp;
+        }
+        answer=num1-num2;
+        quiz=num1+"-"+num2+"="+answer;
+        return quiz;
+    }
+
+    public String GradeThreeMinus1(){//三位数减几百几十
+        num1=getNumInRange(101,999);
+        num2=getNumInRange(10,99)*10;
+        while(num2>num1){
+            num2=getNumInRange(10,99)*10;
+        }
+        answer=num1-num2;
+        quiz=num1+"-"+num2+"="+answer;
+        return quiz;
+    }
+
+    public String GradeThreeMinus2(){//任意三位数减任意三位数
+        num1=getNumInRange(100,999);
+        num2=getNumInRange(100,999);
+        if(num2>num1){
+            tmp=num2;
+            num2=num1;
+            num1=tmp;
+        }
+        answer=num1-num2;
+        quiz=num1+"-"+num2+"="+answer;
+        return quiz;
+    }
+
+    public String GradeThreeMul0(){//整十数乘一位数
+        num1=getNumInRange(1,9)*10;
+        num2=getNumInRange(2,9);
+        answer=num1*num2;
+        quiz=num1+"*"+num2+"="+answer;
+        return quiz;
+    }
+
+    public String GradeThreeMul1(){//两位数乘一位数
+        num1=getNumInRange(11,99);
+        num2=getNumInRange(2,9);
+        answer=num1*num2;
+        quiz=num1+"*"+num2+"="+answer;
+        return quiz;
+    }
+
+    public String GradeThreeMul2(){//两位数乘整十数
+        num1=getNumInRange(11,99);
+        num2=getNumInRange(1,9)*10;
+        answer=num1*num2;
+        quiz=num1+"*"+num2+"="+answer;
+        return quiz;
+    }
+
+    public String GradeThreeDiv0(){//整十数除以一位数
+        num1=getNumInRange(1,9)*10;
+        num2=getNumInRange(1,9);
+        while(num1%num2!=0){
+            num2=getNumInRange(1,9);
+        }
+        answer=num1/num2;
+        quiz=num1+"/"+num2+"="+answer;
+        return quiz;
+    }
+
+    public String GradeThreeDiv1(){//两位数除以一位数
+        num1=getNumInRange(10,99);
+        num2=getNumInRange(1,9);
+        while(num1%num2!=0){
+            num2=getNumInRange(1,9);
+        }
+        answer=num1/num2;
+        quiz=num1+"/"+num2+"="+answer;
+        return quiz;
+    }
+
+    public String GradeThreeDiv2(){//几百几十除以一位数
+        num1=getNumInRange(10,99)*10;
+        num2=getNumInRange(1,9);
+        while(num1%num2!=0){
+            num2=getNumInRange(1,9);
+        }
+        answer=num1/num2;
+        quiz=num1+"/"+num2+"="+answer;
         return quiz;
     }
 
@@ -173,7 +324,149 @@ public class Quizs {
 
 
 
-    public String GradeFourPlus0(){//加法交换律a+b+c=a+c+b
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+public String GradeFourPlus0(){//加法交换律a+b+c=a+c+b
         num1=getNumInRange(11,99);//b
         num2=getNumInRange(2,10)*10;//a+c
         num3=getNumInRange(1,89);//a
