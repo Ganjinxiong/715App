@@ -1,21 +1,11 @@
 ﻿package com.example.mrgan.design;
 
-
-
-import java.text.DecimalFormat;
-
-
 public class Quizs {
     String quiz="";
     int num1=0,num2=0,num3=0;
     int tmp=0;
-
-    double dbl1=0.00,dbl2=0.00,dbl3=0.00;
-
     int answer=0;
-
-
-
+    double dbl1=0.00,dbl2=0.00,dbl3=0.00;
 
     public int getNumInRange(int min,int max){//获得[min,max]内的随机数
         int result=(int)(min+Math.random()*(max-min+1));
@@ -142,7 +132,7 @@ public class Quizs {
     public String GradeTwoMul0(){//一位数乘一位数
         num1=getNumInRange(0,9);
         num2=getNumInRange(0,9);
-        quiz=num1+"*"+num2+"=";
+        quiz=num1+"×"+num2+"=";
         return quiz;
     }
 
@@ -150,7 +140,7 @@ public class Quizs {
         num1=getNumInRange(0,9);
         num2=getNumInRange(0,9);
         num3=getNumInRange(1,9);
-        quiz=num1+"*"+num2+"+"+num3+"=";
+        quiz=num1+"×"+num2+"+"+num3+"=";
         return quiz;
     }
 
@@ -161,7 +151,7 @@ public class Quizs {
         if((num1*num2)<num3){
             num3=getNumInRange(1,9);
         }
-        quiz=num1+"*"+num2+"-"+num3+"=";
+        quiz=num1+"×"+num2+"-"+num3+"=";
         return quiz;
     }
 
@@ -169,7 +159,7 @@ public class Quizs {
         num1=getNumInRange(1,9);//除数
         num2=getNumInRange(1,9);//商
         tmp=num1*num2;//被除数
-        quiz=tmp+"/"+num1+"=";
+        quiz=tmp+"÷"+num1+"=";
         return quiz;
     }
 
@@ -178,7 +168,7 @@ public class Quizs {
         num2=getNumInRange(1,9);//商
         tmp=num1*num2;//被除数
         num3=getNumInRange(1,99);//加数
-        quiz=tmp+"/"+num1+"+"+num3+"=";
+        quiz=tmp+"÷"+num1+"+"+num3+"=";
         return quiz;
     }
 
@@ -190,7 +180,7 @@ public class Quizs {
         while(num3>num2){
             num3=getNumInRange(1,9);
         }
-        quiz=tmp+"/"+num1+"-"+num3+"=";
+        quiz=tmp+"÷"+num1+"-"+num3+"=";
         return quiz;
     }
 
@@ -259,7 +249,7 @@ public class Quizs {
         num1=getNumInRange(1,9)*10;
         num2=getNumInRange(2,9);
         answer=num1*num2;
-        quiz=num1+"*"+num2+"="+answer;
+        quiz=num1+"×"+num2+"="+answer;
         return quiz;
     }
 
@@ -267,7 +257,7 @@ public class Quizs {
         num1=getNumInRange(11,99);
         num2=getNumInRange(2,9);
         answer=num1*num2;
-        quiz=num1+"*"+num2+"="+answer;
+        quiz=num1+"×"+num2+"="+answer;
         return quiz;
     }
 
@@ -275,7 +265,7 @@ public class Quizs {
         num1=getNumInRange(11,99);
         num2=getNumInRange(1,9)*10;
         answer=num1*num2;
-        quiz=num1+"*"+num2+"="+answer;
+        quiz=num1+"×"+num2+"="+answer;
         return quiz;
     }
 
@@ -286,7 +276,7 @@ public class Quizs {
             num2=getNumInRange(1,9);
         }
         answer=num1/num2;
-        quiz=num1+"/"+num2+"="+answer;
+        quiz=num1+"÷"+num2+"="+answer;
         return quiz;
     }
 
@@ -297,7 +287,7 @@ public class Quizs {
             num2=getNumInRange(1,9);
         }
         answer=num1/num2;
-        quiz=num1+"/"+num2+"="+answer;
+        quiz=num1+"÷"+num2+"="+answer;
         return quiz;
     }
 
@@ -308,7 +298,7 @@ public class Quizs {
             num2=getNumInRange(1,9);
         }
         answer=num1/num2;
-        quiz=num1+"/"+num2+"="+answer;
+        quiz=num1+"÷"+num2+"="+answer;
         return quiz;
     }
 
@@ -384,7 +374,7 @@ public class Quizs {
         num1=getNumInRange(11,19);//b
         num2=getNumInRange(1,5)*5;//a
         num3=getNumInRange(1,4)*2;//c
-        quiz=num2+"*"+num1+"*"+num3+"=";
+        quiz=num2+"×"+num1+"×"+num3+"=";
         return quiz;
     }
 
@@ -392,7 +382,7 @@ public class Quizs {
         num1=getNumInRange(11,19);//a
         num2=getNumInRange(1,5)*5;//b
         num3=getNumInRange(1,4)*2;//c
-        quiz=num1+"*"+num2+"*"+num3+"=";
+        quiz=num1+"×"+num2+"×"+num3+"=";
         return quiz;
     }
 
@@ -404,7 +394,7 @@ public class Quizs {
             num3=getNumInRange(11,59);
         }
         tmp=num2-num3;//b
-        quiz=num1+"*"+tmp+"="+num1+"*"+num3+"=";
+        quiz=num1+"×"+tmp+"+"+num1+"×"+num3+"=";
         return quiz;
     }
 
@@ -412,7 +402,7 @@ public class Quizs {
         num1=getNumInRange(1,9);//除数
         num2=getNumInRange(11,99);//商
         tmp=num1*num2;//被除数
-        quiz=tmp+"/"+num1+"=";
+        quiz=tmp+"÷"+num1+"=";
         return quiz;
     }
 
@@ -420,7 +410,7 @@ public class Quizs {
         num1=getNumInRange(1,9);//商
         num2=getNumInRange(1,9)*10;//除数
         tmp=num1*num2;//被除数
-        quiz=tmp+"/"+num2+"=";
+        quiz=tmp+"÷"+num2+"=";
         return quiz;
     }
 
@@ -429,7 +419,103 @@ public class Quizs {
         num1=getNumInRange(1,9);//商
         num2=getNumInRange(11,99);//除数
         tmp=num1*num2;//被除数
-        quiz=tmp+"/"+num2+"=";
+        quiz=tmp+"÷"+num2+"=";
+        return quiz;
+    }
+
+    public String GradeFivePlus0(){//同分母分数加法
+        return quiz;
+    }
+
+    public String GradeFivePlus1(){//分子为1的分数加法
+        return quiz;
+    }
+
+    public String GradeFivePlus2(){//异分母分数加法
+        return quiz;
+    }
+
+    public String GradeFiveMinus0(){//同分母分数减法
+        return quiz;
+    }
+
+    public String GradeFiveMinus1(){//分子为1的分数减法
+        return quiz;
+    }
+
+    public String GradeFiveMinus2(){//异分母分数减法
+        return quiz;
+    }
+
+    public String GradeFiveMul0(){//小数乘整数
+        return quiz;
+    }
+
+    public String GradeFiveMul1(){//小数点右移
+        return quiz;
+    }
+
+    public String GradeFiveMul2(){//小数乘小数
+        return quiz;
+    }
+
+    public String GradeFiveDiv0(){//小数除以整数
+        return quiz;
+    }
+
+    public String GradeFiveDiv1(){//整数除以小数
+        return quiz;
+    }
+
+    public String GradeFiveDiv2(){//小数除以小数
+        return quiz;
+    }
+
+    public String GradeSixPlus0(){//分数加法交换律
+        return quiz;
+    }
+
+    public String GradeSixPlus1(){//分数加法结合律
+        return quiz;
+    }
+
+    public String GradeSixPlus2(){//负数加法
+        return quiz;
+    }
+
+    public String GradeSixMinus0(){//分数减法性质
+        return quiz;
+    }
+
+    public String GradeSixMinus1(){//分数减法性质
+        return quiz;
+    }
+
+    public String GradeSixMinus2(){//负数减法
+        return quiz;
+    }
+
+    public String GradeSixMul0(){//分数乘整数
+        return quiz;
+    }
+
+    public String GradeSixMul1(){//分数乘分数
+        return quiz;
+    }
+
+    public String GradeSixMul2(){//分数乘小数
+        return quiz;
+    }
+
+    public String GradeSixDiv0(){//分数除整数
+        return quiz;
+    }
+
+    public String GradeSixDiv1(){//分数除分数
+        return quiz;
+    }
+
+    public String GradeSixDiv2(){//分数除整数
         return quiz;
     }
 
