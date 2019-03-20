@@ -39,6 +39,56 @@ public class MainActivity extends AppCompatActivity {
     private Message message;
 
     private void spinnerInit(){
+
+    }
+
+
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        //隐藏标题栏
+        actionBar = getSupportActionBar();
+        if (actionBar != null)
+            actionBar.hide();
+
+        //显示当前日期
+        dateText = (TextView) findViewById(R.id.textView8);
+        Date now = new Date();
+        Calendar calendar = Calendar.getInstance();
+        year = calendar.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH) + 1;//获取月份，0-11要加1
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        week = calendar.get(Calendar.DAY_OF_WEEK) - 1;//从星期天算起
+        String weekStr;
+        switch (week) {
+            case 1:
+                weekStr = "一";
+                break;
+            case 2:
+                weekStr = "二";
+                break;
+            case 3:
+                weekStr = "三";
+                break;
+            case 4:
+                weekStr = "四";
+                break;
+            case 5:
+                weekStr = "五";
+                break;
+            case 6:
+                weekStr = "六";
+                break;
+            default:
+                weekStr = "日";
+        }
+        dateText.setText(year + "年" + month + "月" + day + "日  星期" + weekStr);
+
+
         //spinner数据绑定
         spinner1 = findViewById(R.id.spinner1);
         spinner2 = findViewById(R.id.spinner2);
@@ -112,77 +162,6 @@ public class MainActivity extends AppCompatActivity {
                 item1_3.setVisibility(View.GONE);
             }
         });
-    }
-
-    static class MyHandler extends Handler {
-        WeakReference<MainActivity> mActivity;
-
-        MyHandler(MainActivity activity) {
-            mActivity = new WeakReference<MainActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            MainActivity theActivity = mActivity.get();
-            switch (msg.what) {
-                case 0:
-                    theActivity.spinnerInit();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-
-    @SuppressLint("SetTextI18n")
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        //隐藏标题栏
-        actionBar = getSupportActionBar();
-        if (actionBar != null)
-            actionBar.hide();
-
-        //显示当前日期
-        dateText = (TextView) findViewById(R.id.textView8);
-        Date now = new Date();
-        Calendar calendar = Calendar.getInstance();
-        year = calendar.get(Calendar.YEAR);
-        month = calendar.get(Calendar.MONTH) + 1;//获取月份，0-11要加1
-        day = calendar.get(Calendar.DAY_OF_MONTH);
-        week = calendar.get(Calendar.DAY_OF_WEEK) - 1;//从星期天算起
-        String weekStr;
-        switch (week) {
-            case 1:
-                weekStr = "一";
-                break;
-            case 2:
-                weekStr = "二";
-                break;
-            case 3:
-                weekStr = "三";
-                break;
-            case 4:
-                weekStr = "四";
-                break;
-            case 5:
-                weekStr = "五";
-                break;
-            case 6:
-                weekStr = "六";
-                break;
-            default:
-                weekStr = "日";
-        }
-        dateText.setText(year + "年" + month + "月" + day + "日  星期" + weekStr);
-
-        handler = new MyHandler(this);
-        Message message = new Message();
-        message.what = 0;
-        handler.sendMessage(message);
 
         //口算练习模块
         startPracticeBt = (Button) findViewById(R.id.button1);

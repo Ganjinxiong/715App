@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.os.Vibrator;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -37,9 +39,7 @@ public class ExamActivity extends AppCompatActivity {
     private Button exitButton, skipButton;
     private Long startTime, endTime, usedTime, usedMin, usedSec;
     private Boolean wrong;
-    private Handler handler;
-    private Message message;
-
+    private Vibrator vibrator;
 
     //显示得分和用时
     private void showResult() {
@@ -144,32 +144,6 @@ public class ExamActivity extends AppCompatActivity {
         result = questionItem[1];
     }
 
-    static class MyHandler extends Handler {
-        WeakReference<ExamActivity> mActivity;
-
-        MyHandler(ExamActivity activity) {
-            mActivity = new WeakReference<ExamActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            ExamActivity theActivity = mActivity.get();
-            switch (msg.what) {
-                case 0:
-                    theActivity.createQuestion();
-                    break;
-                case 1:
-                    theActivity.showWrong();
-                    break;
-                case 2:
-                    theActivity.disWrong();
-                    break;
-                default:
-                    theActivity.showResult();
-                    break;
-            }
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,10 +176,7 @@ public class ExamActivity extends AppCompatActivity {
         trueCount = 0;
         //第几题
         totalCount = 1;
-        handler = new ExamActivity.MyHandler(this);
-        message = new Message();
-        message.what = 0;
-        handler.sendMessage(message);
+       createQuestion();
         wrong = false;
         startTime = System.currentTimeMillis();
 
@@ -218,35 +189,27 @@ public class ExamActivity extends AppCompatActivity {
                 answer = answerEditText.getText().toString();
                 if (answer.equals(result)) {
                     if (wrong) {
-                        message.what = 2;//错误过时隐藏
-                        message = new Message();
-                        handler.sendMessage(message);
+                        disWrong();
                         wrong =false;
                     }
                     trueCount++;
                 } else if (answer.equals("")) {
                     if (wrong) {
-                        message = new Message();
-                        message.what = 2;//错误过时隐藏
-                        handler.sendMessage(message);
+                        disWrong();
                         wrong =false;
                     }
                 } else {
-                    message = new Message();
-                    message.what = 1;//错误显示
-                    handler.sendMessage(message);
+                    showWrong();
                     wrong =true;
+                    vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                    vibrator.vibrate(100);
                 }
 
                 if (totalCount == 25) {
-                    message = new Message();
-                    message.what = 3;//结束
-                    handler.sendMessage(message);
+                    showResult();
                 } else {
                     totalCount++;
-                    message = new Message();
-                    message.what = 0;//出题
-                    handler.sendMessage(message);
+                    createQuestion();
                 }
             }
         });
@@ -257,20 +220,14 @@ public class ExamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (totalCount == 25) {
-                    message = new Message();
-                    message.what = 3;//结束
-                    handler.sendMessage(message);
+                   showResult();
                 } else {
                     if (wrong) {
-                        message = new Message();
-                        message.what = 2;//错误显示
-                        handler.sendMessage(message);
+                        disWrong();
                         wrong =false;
                     }
                     totalCount++;
-                    message = new Message();
-                    message.what = 0;//出题；
-                    handler.sendMessage(message);
+                   createQuestion();
                 }
             }
         });
@@ -301,5 +258,33 @@ public class ExamActivity extends AppCompatActivity {
                         .show();
             }
         });
+    }
+
+    //重写onKeyDown()方法
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //点击返回键调用方法
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            new SweetAlertDialog(ExamActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("要退出模拟测验吗？")
+                    .setCancelText("是，退出测验")
+                    .setConfirmText("不，继续测验")
+                    .showCancelButton(true)
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.cancel();
+                            finish();
+                        }
+                    })
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismissWithAnimation();
+                        }
+                    })
+                    .show();
+        }
+        return false;
     }
 }

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -80,9 +81,6 @@ public class PracticeActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             PracticeActivity theActivity = mActivity.get();
             switch (msg.what) {
-                case 0:
-                    theActivity.createQuestion();
-                    break;
                 case 1:
                     SystemClock.sleep(1000);
                     theActivity.createQuestion();
@@ -129,9 +127,7 @@ public class PracticeActivity extends AppCompatActivity {
         handler = new MyHandler(this);
         isfirst = true;
         correct = 0 ;
-        message = new Message();
-        message.what = 0;
-        handler.sendMessage(message);
+        createQuestion();
 
 
         //判断对错，进行下一题
@@ -212,4 +208,33 @@ public class PracticeActivity extends AppCompatActivity {
         });
 
     }
+
+    //重写onKeyDown()方法
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        //点击返回键调用方法
+        if(keyCode==KeyEvent.KEYCODE_BACK){
+            new SweetAlertDialog(PracticeActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("要退出练习吗？")
+                    .setCancelText("是，退出练习")
+                    .setConfirmText("不，继续练习")
+                    .showCancelButton(true)
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.cancel();
+                            finish();
+                        }
+                    })
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            sDialog.dismissWithAnimation();
+                        }
+                    })
+                    .show();
+        }
+        return false;
+    }
+
 }
