@@ -37,8 +37,6 @@ public class ExamActivity extends AppCompatActivity {
     private Button exitButton, skipButton;
     private Long startTime, endTime, usedTime, usedMin, usedSec;
     private Boolean wrong;
-    private Handler handler;
-    private Message message;
 
 
     //显示得分和用时
@@ -144,32 +142,6 @@ public class ExamActivity extends AppCompatActivity {
         result = questionItem[1];
     }
 
-    static class MyHandler extends Handler {
-        WeakReference<ExamActivity> mActivity;
-
-        MyHandler(ExamActivity activity) {
-            mActivity = new WeakReference<ExamActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            ExamActivity theActivity = mActivity.get();
-            switch (msg.what) {
-                case 0:
-                    theActivity.createQuestion();
-                    break;
-                case 1:
-                    theActivity.showWrong();
-                    break;
-                case 2:
-                    theActivity.disWrong();
-                    break;
-                default:
-                    theActivity.showResult();
-                    break;
-            }
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,10 +174,7 @@ public class ExamActivity extends AppCompatActivity {
         trueCount = 0;
         //第几题
         totalCount = 1;
-        handler = new ExamActivity.MyHandler(this);
-        message = new Message();
-        message.what = 0;
-        handler.sendMessage(message);
+        createQuestion();
         wrong = false;
         startTime = System.currentTimeMillis();
 
@@ -218,35 +187,25 @@ public class ExamActivity extends AppCompatActivity {
                 answer = answerEditText.getText().toString();
                 if (answer.equals(result)) {
                     if (wrong) {
-                        message.what = 2;//错误过时隐藏
-                        message = new Message();
-                        handler.sendMessage(message);
+                        disWrong();
                         wrong =false;
                     }
                     trueCount++;
                 } else if (answer.equals("")) {
                     if (wrong) {
-                        message = new Message();
-                        message.what = 2;//错误过时隐藏
-                        handler.sendMessage(message);
+                       disWrong();
                         wrong =false;
                     }
                 } else {
-                    message = new Message();
-                    message.what = 1;//错误显示
-                    handler.sendMessage(message);
+                    showWrong();
                     wrong =true;
                 }
 
                 if (totalCount == 25) {
-                    message = new Message();
-                    message.what = 3;//结束
-                    handler.sendMessage(message);
+                    showResult();
                 } else {
                     totalCount++;
-                    message = new Message();
-                    message.what = 0;//出题
-                    handler.sendMessage(message);
+                    createQuestion();
                 }
             }
         });
@@ -257,20 +216,14 @@ public class ExamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (totalCount == 25) {
-                    message = new Message();
-                    message.what = 3;//结束
-                    handler.sendMessage(message);
+                   showResult();
                 } else {
                     if (wrong) {
-                        message = new Message();
-                        message.what = 2;//错误显示
-                        handler.sendMessage(message);
+                        disWrong();
                         wrong =false;
                     }
                     totalCount++;
-                    message = new Message();
-                    message.what = 0;//出题；
-                    handler.sendMessage(message);
+                    createQuestion();
                 }
             }
         });

@@ -81,9 +81,6 @@ public class PracticeActivity extends AppCompatActivity {
             PracticeActivity theActivity = mActivity.get();
             switch (msg.what) {
                 case 0:
-                    theActivity.createQuestion();
-                    break;
-                case 1:
                     SystemClock.sleep(1000);
                     theActivity.createQuestion();
                     break;
@@ -129,10 +126,7 @@ public class PracticeActivity extends AppCompatActivity {
         handler = new MyHandler(this);
         isfirst = true;
         correct = 0 ;
-        message = new Message();
-        message.what = 0;
-        handler.sendMessage(message);
-
+        createQuestion();
 
         //判断对错，进行下一题
         answerEditText.addTextChangedListener(new TextWatcher() {
@@ -161,7 +155,7 @@ public class PracticeActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 message = new Message();
-                                message.what = 1;
+                                message.what = 0;
                                 handler.sendMessage(message);
                             }
                         }).start();
