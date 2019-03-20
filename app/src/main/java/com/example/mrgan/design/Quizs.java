@@ -1,18 +1,31 @@
 ﻿package com.example.mrgan.design;
 
+import java.text.DecimalFormat;
+
 public class Quizs {
     String quiz="";
-    int num1=0,num2=0,num3=0;
+    int num1=0,num2=0,num3=0,num4=0;
     int tmp=0;
     int answer=0;
-    double dbl1=0.00,dbl2=0.00,dbl3=0.00;
+    double dbl1=0.00,dbl2=0.00,dbl3=0.00,answerDbl=0.00;
+    String fraction1,fraction2,fraction3,answerStr;
+    DecimalFormat decimalFormat;
+
 
     public int getNumInRange(int min,int max){//获得[min,max]内的随机数
         int result=(int)(min+Math.random()*(max-min+1));
         return result;
     }
 
-    public double getDoubleInRange(double min,double max){//获得[min,max]内的随机两位小数
+    public double getDoubleInRange1(double min,double max){//获得[min,max]内的随机一位小数
+        int minTemp=(int)(min*10);
+        int maxTemp=(int)(max*10);
+        int temp=(int)(minTemp+Math.random()*(maxTemp-minTemp+1));
+        double result=temp;
+        return result/10;
+    }
+
+    public double getDoubleInRange2(double min,double max){//获得[min,max]内的随机两位小数
         int minTemp=(int)(min*100);
         int maxTemp=(int)(max*100);
         int temp=(int)(minTemp+Math.random()*(maxTemp-minTemp+1));
@@ -327,8 +340,8 @@ public class Quizs {
     }
 
     public String GradeFourPlus2(){//小数加法
-        dbl1=getDoubleInRange(0.01,9.99);
-        dbl2=getDoubleInRange(0.01,9.99);
+        dbl1=getDoubleInRange2(0.01,9.99);
+        dbl2=getDoubleInRange2(0.01,9.99);
         quiz=dbl1+"+"+dbl2+"=";
         return quiz;
     }
@@ -361,10 +374,10 @@ public class Quizs {
     }
 
     public String GradeFourMinus2(){//小数减法
-        dbl1=getDoubleInRange(0.01,9.99);
-        dbl2=getDoubleInRange(0.01,9.99);
+        dbl1=getDoubleInRange2(0.01,9.99);
+        dbl2=getDoubleInRange2(0.01,9.99);
         while(dbl1<dbl2){
-            dbl2=getDoubleInRange(0.01,9.99);
+            dbl2=getDoubleInRange2(0.01,9.99);
         }
         quiz=dbl1+"-"+dbl2+"=";
         return quiz;
@@ -424,50 +437,167 @@ public class Quizs {
     }
 
     public String GradeFivePlus0(){//同分母分数加法
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>num2){
+            num2=getNumInRange(2,9);
+        }
+        fraction1=num1+"/"+num2;
+        num1=getNumInRange(1,9);
+        fraction2=num1+"/"+num2;
+        FractionCal f=new FractionCal();
+        fraction3=f.compute(fraction1,"+",fraction2);
+        quiz=fraction1+"+"+fraction2+"="+fraction3;
         return quiz;
     }
 
     public String GradeFivePlus1(){//分子为1的分数加法
+        num1=1;
+        num2=getNumInRange(2,9);
+        fraction1=num1+"/"+num2;
+        num2=getNumInRange(2,9);
+        fraction2=num1+"/"+num2;
+        FractionCal f=new FractionCal();
+        fraction3=f.compute(fraction1,"+",fraction2);
+        quiz=fraction1+"+"+fraction2+"="+fraction3;
         return quiz;
     }
 
-    public String GradeFivePlus2(){//异分母分数加法
+    public String GradeFivePlus2(){//异分母真分数加法
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>num2){
+            num2=getNumInRange(2,9);
+        }
+        fraction1=num1+"/"+num2;
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>num2){
+            num2=getNumInRange(2,9);
+        }
+        fraction2=num1+"/"+num2;
+        FractionCal f=new FractionCal();
+        fraction3=f.compute(fraction1,"+",fraction2);
+        quiz=fraction1+"+"+fraction2+"="+fraction3;
         return quiz;
     }
 
     public String GradeFiveMinus0(){//同分母分数减法
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(1,9);
+        num3=getNumInRange(2,9);
+        if(num1<num2){
+            tmp=num1;
+            num1=num2;
+            num2=tmp;
+        }
+        fraction1=num1+"/"+num3;
+        fraction2=num2+"/"+num3;
+        FractionCal f=new FractionCal();
+        fraction3=f.compute(fraction1,"-",fraction2);
+        quiz=fraction1+"-"+fraction2+"="+fraction3;
         return quiz;
     }
 
     public String GradeFiveMinus1(){//分子为1的分数减法
+        num1=getNumInRange(2,9);
+        num2=getNumInRange(2,9);
+        if(num1<num2){
+            tmp=num1;
+            num1=num2;
+            num2=tmp;
+        }
+        fraction1="1"+"/"+num1;
+        fraction1="1"+"/"+num2;
+        FractionCal f=new FractionCal();
+        fraction3=f.compute(fraction1,"-",fraction2);
+        quiz=fraction1+"-"+fraction2+"="+fraction3;
         return quiz;
     }
 
     public String GradeFiveMinus2(){//异分母分数减法
+        num1=getNumInRange(1,9);//分子1
+        num2=getNumInRange(1,9);//分子2
+        num3=getNumInRange(2,9);//分母1
+        num4=getNumInRange(2,9);//分母2
+        while(num4*num1<num2*num3){
+            tmp=num1;
+            num1=num2;
+            num2=tmp;
+            tmp=num3;
+            num3=num4;
+            num4=tmp;
+        }
+        fraction1=num1+"/"+num3;
+        fraction2=num2+"/"+num4;
+        FractionCal f=new FractionCal();
+        fraction3=f.compute(fraction1,"-",fraction2);
+        quiz=fraction1+"-"+fraction2+"="+fraction3;
         return quiz;
     }
 
     public String GradeFiveMul0(){//小数乘整数
+        dbl1=getDoubleInRange2(0.01,9.99);
+        num1=getNumInRange(2,9);
+        answerDbl=dbl1*num1;
+        quiz=dbl1+"*"+num1+"="+answerDbl;
         return quiz;
     }
 
     public String GradeFiveMul1(){//小数点右移
+        dbl1=getDoubleInRange1(0.1,9.9);
+        num1=getNumInRange(1,3);
+        num1=10^num1;
+        answer=(int)(dbl1*num1);
+        quiz=dbl1+"*"+num1+"="+answerDbl;
         return quiz;
     }
 
-    public String GradeFiveMul2(){//小数乘小数
+    public String GradeFiveMul2(){//小数乘小数,答案保留两位小数
+        dbl1=getDoubleInRange1(0.1,0.9);
+        dbl2=getDoubleInRange1(0.1,0.9);
+        answerDbl=dbl1*dbl2;
+        decimalFormat=new DecimalFormat("#.00");
+        answerStr=decimalFormat.format(answerDbl);
+        quiz=dbl1+"*"+dbl2+"="+answerStr;
         return quiz;
     }
 
     public String GradeFiveDiv0(){//小数除以整数
+        num1=getNumInRange(1,9);//除数
+        dbl1=getDoubleInRange1(0.1,0.9);//商
+        dbl2=num1*dbl1;//被除数
+        quiz=dbl2+"/"+num1+"="+dbl1;
         return quiz;
     }
 
-    public String GradeFiveDiv1(){//整数除以小数
+    public String GradeFiveDiv1(){//小数点左移
+        dbl1=getDoubleInRange1(0.1,0.9);
+        num1=10^getNumInRange(1,3);
+        switch (num1){
+            case 10:
+                decimalFormat=new DecimalFormat("#.00");
+                break;
+            case 100:
+                decimalFormat=new DecimalFormat("#.000");
+                break;
+            case 1000:
+                decimalFormat=new DecimalFormat("#.0000");
+                break;
+        }
+        answerDbl=dbl1/num1;
+        answerStr=decimalFormat.format(answerDbl);
+        quiz=dbl1+"/"+num1+"="+answerStr;
         return quiz;
     }
 
     public String GradeFiveDiv2(){//小数除以小数
+        dbl1=getDoubleInRange1(0.1,0.9);
+        dbl2=getDoubleInRange1(0.1,0.9);
+        dbl3=dbl1*dbl2;
+        decimalFormat=new DecimalFormat("#.00");
+        answerStr=decimalFormat.format(dbl3);
+        quiz=dbl3+"/"+dbl1+"="+dbl2;
         return quiz;
     }
 

@@ -5,6 +5,7 @@ import java.util.StringTokenizer;
 public class FractionCal {
     int numerator;  // 分子
     int denominator; // 分母
+    String answer;
 
     FractionCal(){
     }
@@ -89,7 +90,7 @@ public class FractionCal {
         return result;
     }
 
-    public static void compute(String data1,String operation,String data2){//判断运算符号并进行运算
+    public String compute(String data1,String operation,String data2){//判断运算符号并进行运算
         StringTokenizer createFraction = new StringTokenizer(data1,"/");
         int data1_1 = Integer.parseInt(createFraction.nextToken());
         int data1_2 = Integer.parseInt(createFraction.nextToken());
@@ -106,29 +107,30 @@ public class FractionCal {
             result = f1.plus(f2);
             a = result.getNumerator();
             b = result.getDenominator();
-            System.out.println(data1+" "+operation+" " +data2+" = " + a + "/" + b);
+            answer=a + "/" + b;
         }
 
         if(operation.equals("-")){
             result = f1.minus(f2);
             a = result.getNumerator();
             b = result.getDenominator();
-            System.out.println(data1+" "+operation+" " +data2+" = " + a + "/" + b);
+            answer=a + "/" + b;
         }
 
         if(operation.equals("*")){
             result = f1.mul(f2);
             a = result.getNumerator();
             b = result.getDenominator();
-            System.out.println(data1+" "+operation+" " +data2+" = " + a + "/" + b);
+            answer=a + "/" + b;
         }
 
         if(operation.equals("/")){
             result = f1.div(f2);
             a = result.getNumerator();
             b = result.getDenominator();
-            System.out.println(data1+" "+operation+" " +data2+" = " + a + "/" + b);
+            answer=a + "/" + b;
         }
+        return answer;
     }
 }
 
