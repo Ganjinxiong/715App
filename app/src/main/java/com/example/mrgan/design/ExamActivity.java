@@ -37,6 +37,8 @@ public class ExamActivity extends AppCompatActivity {
     private Button exitButton, skipButton;
     private Long startTime, endTime, usedTime, usedMin, usedSec;
     private Boolean wrong;
+    private Handler handler;
+    private Message message;
 
 
     //显示得分和用时
@@ -142,6 +144,32 @@ public class ExamActivity extends AppCompatActivity {
         result = questionItem[1];
     }
 
+    static class MyHandler extends Handler {
+        WeakReference<ExamActivity> mActivity;
+
+        MyHandler(ExamActivity activity) {
+            mActivity = new WeakReference<ExamActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            ExamActivity theActivity = mActivity.get();
+            switch (msg.what) {
+                case 0:
+                    theActivity.createQuestion();
+                    break;
+                case 1:
+                    theActivity.showWrong();
+                    break;
+                case 2:
+                    theActivity.disWrong();
+                    break;
+                default:
+                    theActivity.showResult();
+                    break;
+            }
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,7 +202,10 @@ public class ExamActivity extends AppCompatActivity {
         trueCount = 0;
         //第几题
         totalCount = 1;
-        createQuestion();
+        handler = new ExamActivity.MyHandler(this);
+        message = new Message();
+        message.what = 0;
+        handler.sendMessage(message);
         wrong = false;
         startTime = System.currentTimeMillis();
 
@@ -187,25 +218,35 @@ public class ExamActivity extends AppCompatActivity {
                 answer = answerEditText.getText().toString();
                 if (answer.equals(result)) {
                     if (wrong) {
-                        disWrong();
+                        message.what = 2;//错误过时隐藏
+                        message = new Message();
+                        handler.sendMessage(message);
                         wrong =false;
                     }
                     trueCount++;
                 } else if (answer.equals("")) {
                     if (wrong) {
-                       disWrong();
+                        message = new Message();
+                        message.what = 2;//错误过时隐藏
+                        handler.sendMessage(message);
                         wrong =false;
                     }
                 } else {
-                    showWrong();
+                    message = new Message();
+                    message.what = 1;//错误显示
+                    handler.sendMessage(message);
                     wrong =true;
                 }
 
                 if (totalCount == 25) {
-                    showResult();
+                    message = new Message();
+                    message.what = 3;//结束
+                    handler.sendMessage(message);
                 } else {
                     totalCount++;
-                    createQuestion();
+                    message = new Message();
+                    message.what = 0;//出题
+                    handler.sendMessage(message);
                 }
             }
         });
@@ -216,14 +257,20 @@ public class ExamActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (totalCount == 25) {
-                   showResult();
+                    message = new Message();
+                    message.what = 3;//结束
+                    handler.sendMessage(message);
                 } else {
                     if (wrong) {
-                        disWrong();
+                        message = new Message();
+                        message.what = 2;//错误显示
+                        handler.sendMessage(message);
                         wrong =false;
                     }
                     totalCount++;
-                    createQuestion();
+                    message = new Message();
+                    message.what = 0;//出题；
+                    handler.sendMessage(message);
                 }
             }
         });
