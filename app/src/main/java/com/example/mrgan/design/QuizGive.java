@@ -137,45 +137,58 @@ public class QuizGive {
         }
         return equation;
     }
+
     public String GradeThree(){
         switch (typeLabel) {
             case "加法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeThreePlus0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeThreePlus1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeThreePlus2();
                         break;
                 }
                 break;
             case "减法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeThreeMinus0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeThreeMinus1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeThreeMinus2();
                         break;
                 }
                 break;
             case "乘法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeThreeMul0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeThreeMul1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeThreeMul2();
                         break;
                 }
                 break;
             case "除法":
                 switch(Level){
                     case 0:
+                        equation=new Quizs().GradeThreeDiv0();
                         break;
                     case 1:
+                        equation=new Quizs().GradeThreeDiv1();
                         break;
                     case 2:
+                        equation=new Quizs().GradeThreeDiv2();
                         break;
                 }
                 break;
