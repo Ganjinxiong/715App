@@ -102,32 +102,34 @@ public class FractionCal {
         FractionCal f2 = new FractionCal(data2_1,data2_2);
 
         FractionCal result;
-        int a,b;
+        int a=0,b=0;
         if(operation.equals("+")){
             result = f1.plus(f2);
             a = result.getNumerator();
             b = result.getDenominator();
-            answer=a + "/" + b;
         }
 
         if(operation.equals("-")){
             result = f1.minus(f2);
             a = result.getNumerator();
             b = result.getDenominator();
-            answer=a + "/" + b;
         }
 
         if(operation.equals("*")){
             result = f1.mul(f2);
             a = result.getNumerator();
             b = result.getDenominator();
-            answer=a + "/" + b;
         }
 
         if(operation.equals("/")){
             result = f1.div(f2);
             a = result.getNumerator();
             b = result.getDenominator();
+        }
+        if(a%b!=0){
+            answer=Integer.toString(a/b);
+        }
+        else{
             answer=a + "/" + b;
         }
         return answer;
