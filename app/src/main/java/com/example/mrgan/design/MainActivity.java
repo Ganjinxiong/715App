@@ -18,29 +18,30 @@ import android.widget.TextView;
 
 import com.example.mrgan.design.R;
 
+import org.litepal.LitePal;
+
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class MainActivity extends AppCompatActivity {
-    private View item1, item1_1, item1_2, item1_3, item2, item2_1, item2_2;
+    private View item1, item1_1, item1_2, item1_3, item2, item2_1, item2_2,item3,item3_1,item3_2;
     private TextView dateText;
-    private Spinner spinner1, spinner2, spinner3;
+    private Spinner spinner1, spinner2, spinner3,spinner4;
     private int year, month, day, week;
     private String grade, type;
-    private Button startPracticeBt, startExamBt;
+    private Button startPracticeBt, startExamBt,startRectifyBt;
     private List<CharSequence> list1, list2;
     private ArrayAdapter<CharSequence> adapter1, adapter2;
     private Intent intent;
     private ActionBar actionBar;
-    private Handler handler;
-    private Message message;
-
-    private void spinnerInit(){
-
-    }
+    private List<Question> questionList;
+    private Iterator iterator;
 
 
 
@@ -88,11 +89,11 @@ public class MainActivity extends AppCompatActivity {
         }
         dateText.setText(year + "年" + month + "月" + day + "日  星期" + weekStr);
 
-
         //spinner数据绑定
         spinner1 = findViewById(R.id.spinner1);
         spinner2 = findViewById(R.id.spinner2);
         spinner3 = findViewById(R.id.spinner3);
+        spinner4 = findViewById(R.id.spinner4);
         list1 = new ArrayList<>();
         list1.add("加法");
         list1.add("减法");
@@ -118,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
         //选项扩展
         item1 = (View) findViewById(R.id.item1);
         item1_1 = (View) findViewById(R.id.item1_1);
@@ -140,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 item2_1.setVisibility(View.GONE);
                 item2_2.setVisibility(View.GONE);
+                item3_1.setVisibility(View.GONE);
+                item3_2.setVisibility(View.GONE);
             }
         });
         item2 = (View) findViewById(R.id.item2);
@@ -160,8 +164,33 @@ public class MainActivity extends AppCompatActivity {
                 item1_1.setVisibility(View.GONE);
                 item1_2.setVisibility(View.GONE);
                 item1_3.setVisibility(View.GONE);
+                item3_1.setVisibility(View.GONE);
+                item3_2.setVisibility(View.GONE);
             }
         });
+        item3 = (View) findViewById(R.id.item3);
+        item3_1 = (View) findViewById(R.id.item3_1);
+        item3_2 = (View) findViewById(R.id.item3_2);
+        item3_1.setVisibility(View.GONE);
+        item3_2.setVisibility(View.GONE);
+        item3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (item3_1.getVisibility() == View.VISIBLE) {
+                    item3_1.setVisibility(View.GONE);
+                    item3_2.setVisibility(View.GONE);
+                } else {
+                    item3_1.setVisibility(View.VISIBLE);
+                    item3_2.setVisibility(View.VISIBLE);
+                }
+                item1_1.setVisibility(View.GONE);
+                item1_2.setVisibility(View.GONE);
+                item1_3.setVisibility(View.GONE);
+                item2_1.setVisibility(View.GONE);
+                item2_2.setVisibility(View.GONE);
+            }
+        });
+
 
         //口算练习模块
         startPracticeBt = (Button) findViewById(R.id.button1);
@@ -190,6 +219,39 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //错题纠正模块
+        startRectifyBt = findViewById(R.id.button3);
+        startRectifyBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRectifyBt.setClickable(false);
+                grade = spinner4.getSelectedItem().toString();
+                questionList = LitePal.where("grade like ?", grade).find(Question.class);
+                iterator = questionList.iterator();
+                if (iterator.hasNext()) {
+                    intent = new Intent(MainActivity.this, RectifyActivity.class);
+                    intent.putExtra("grade", grade);
+                    startActivity(intent);
+                }
+                else {
+                    new SweetAlertDialog(MainActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                            .setTitleText("该年级的错题已纠正")
+                            .setConfirmText("退出纠正")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sDialog) {
+                                    startRectifyBt.setClickable(true);
+                                    sDialog.dismissWithAnimation();
+                                }
+                            })
+                            .show();
+                }
+            }
+        });
+
+        LitePal.getDatabase();
+
     }
 
     @Override
@@ -197,5 +259,6 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         startPracticeBt.setClickable(true);
         startExamBt.setClickable(true);
+        startRectifyBt.setClickable(true);
     }
 }

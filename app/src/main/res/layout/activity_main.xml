@@ -46,7 +46,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="100dp"
+                    android:layout_marginTop="80dp"
                     android:layout_marginRight="20dp"
                     android:layout_marginBottom="20dp"
                     android:background="#60FFFFFF"
@@ -102,7 +102,7 @@
                             android:layout_weight="4"
                             android:background="@drawable/biankuang4"
                             android:entries="@array/spinnerselect1"
-                            android:paddingLeft="10dp" />
+                            android:paddingLeft="20dp" />
 
                     </LinearLayout>
 
@@ -130,7 +130,7 @@
                             android:layout_weight="4"
                             android:background="@drawable/biankuang4"
                             android:entries="@array/spinnerselect2"
-                            android:paddingLeft="10dp" />
+                            android:paddingLeft="20dp" />
 
                     </LinearLayout>
 
@@ -214,7 +214,7 @@
                             android:layout_weight="4"
                             android:background="@drawable/biankuang4"
                             android:entries="@array/spinnerselect1"
-                            android:paddingLeft="10dp" />
+                            android:paddingLeft="20dp" />
 
                     </LinearLayout>
 
@@ -273,7 +273,55 @@
                             android:textSize="30sp" />
                     </LinearLayout>
 
+                    <LinearLayout
+                        android:id="@+id/item3_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="选择年级:"
+                            android:textSize="20dp" />
+
+                        <Spinner
+                            android:id="@+id/spinner4"
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="4"
+                            android:background="@drawable/biankuang4"
+                            android:entries="@array/spinnerselect1"
+                            android:paddingLeft="20dp" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/item3_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="right"
+                        android:orientation="horizontal">
+
+                        <Button
+                            android:id="@+id/button3"
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/button2"
+                            android:gravity="center"
+                            android:text="开始纠正"
+                            android:textSize="18dp" />
+                    </LinearLayout>
+
                 </LinearLayout>
+
             </LinearLayout>
 
         </ScrollView>
