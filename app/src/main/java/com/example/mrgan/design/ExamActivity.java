@@ -194,12 +194,6 @@ public class ExamActivity extends AppCompatActivity {
                     }
                     trueCount++;
                 } else if (answer.equals("")) {
-                    Question question = new Question();
-                    question.setqString(questionStr);
-                    question.setGrade(grade);
-                    question.setResult(result);
-                    question.setAnswer("?");
-                    question.save();
                     if (wrong) {
                         disWrong();
                         wrong =false;
@@ -207,12 +201,6 @@ public class ExamActivity extends AppCompatActivity {
                 } else {
                     showWrong();
                     wrong =true;
-                    Question question = new Question();
-                    question.setqString(questionStr);
-                    question.setGrade(grade);
-                    question.setResult(result);
-                    question.setAnswer(answer);
-                    question.save();
                     vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
                     vibrator.vibrate(100);
                 }
@@ -231,12 +219,6 @@ public class ExamActivity extends AppCompatActivity {
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Question question = new Question();
-                question.setqString(questionStr);
-                question.setGrade(grade);
-                question.setResult(result);
-                question.setAnswer("?");
-                question.save();
                 if (totalCount == 25) {
                    showResult();
                 } else {

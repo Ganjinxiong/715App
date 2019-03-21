@@ -27,7 +27,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class PracticeActivity extends AppCompatActivity {
 
     private Intent intent;
-    private String grade, type,question,questionStr,oldStr,result, answer;
+    private String grade, type,question,questionStr,result, answer;
     private String[] questionItem;
     private int maxLevel, minLevel, nowLevel, correct;
     private TextView nowTextView, lastTextView, nextTextView;
@@ -53,13 +53,11 @@ public class PracticeActivity extends AppCompatActivity {
             question = quizGive.give();
             questionItem = question.split("=");
             questionStr = questionItem[0]+"=";
-            oldStr =questionStr;//错题用
             nowTextView.setText(questionStr);
             isfirst = false;
         } else {
             judgeImage.setImageResource(R.drawable.xie2);
             lastTextView.setText(nowTextView.getText().toString() + result);
-            oldStr =questionStr;//错题用
             nowTextView.setText(questionStr);
         }
         //本题答案
@@ -179,12 +177,6 @@ public class PracticeActivity extends AppCompatActivity {
                 if (nowLevel>minLevel){
                     nowLevel--;
                 }
-                Question question = new Question();
-                question.setqString(oldStr);
-                question.setGrade(grade);
-                question.setResult(result);
-                question.setAnswer("?");
-                question.save();
                 createQuestion();
             }
         });
