@@ -126,7 +126,7 @@ public class FractionCal {
             a = result.getNumerator();
             b = result.getDenominator();
         }
-        if(a%b!=0){
+        if(a%b==0){
             answer=Integer.toString(a/b);
         }
         else{

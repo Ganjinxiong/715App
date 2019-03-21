@@ -8,9 +8,38 @@ public class Quizs {
     int tmp=0;
     int answer=0;
     double dbl1=0.00,dbl2=0.00,dbl3=0.00,answerDbl=0.00;
-    String fraction1,fraction2,fraction3,answerStr;
+    String fraction1,fraction2,fraction3,fraction4,answerStr;
     DecimalFormat decimalFormat;
+    FractionCal f=new FractionCal();
 
+    public String setFraction(int a, int b){//设置分子和分母，可约分则进行约分
+        String fraction;
+        int c=getGCD(Math.abs(a),Math.abs(b));//得出最大公约数
+        int numerator=a/c;
+        int denominator=b/c;
+        if(numerator<0 && denominator<0){//分子分母同为负则转为正数
+            numerator = - numerator;
+            denominator = - denominator;
+        }
+        fraction=numerator+"/"+denominator;
+        return fraction;
+    }
+
+    int getGCD(int a,int b){//计算最大公约数
+        int c;
+        if(a<b){
+            c=a;
+            a=b;
+            b=c;
+        }
+        int r=a%b;
+        while(r!=0){
+            a=b;
+            b=r;
+            r=a%b;
+        }
+        return b;
+    }
 
     public int getNumInRange(int min,int max){//获得[min,max]内的随机数
         int result=(int)(min+Math.random()*(max-min+1));
@@ -439,13 +468,15 @@ public class Quizs {
     public String GradeFivePlus0(){//同分母分数加法
         num1=getNumInRange(1,9);
         num2=getNumInRange(2,9);
-        while(num1>num2){
-            num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
         }
-        fraction1=num1+"/"+num2;
+        fraction1=setFraction(num1,num2);
         num1=getNumInRange(1,9);
-        fraction2=num1+"/"+num2;
-        FractionCal f=new FractionCal();
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction2=setFraction(num1,num2);
         fraction3=f.compute(fraction1,"+",fraction2);
         quiz=fraction1+"+"+fraction2+"="+fraction3;
         return quiz;
@@ -457,7 +488,6 @@ public class Quizs {
         fraction1=num1+"/"+num2;
         num2=getNumInRange(2,9);
         fraction2=num1+"/"+num2;
-        FractionCal f=new FractionCal();
         fraction3=f.compute(fraction1,"+",fraction2);
         quiz=fraction1+"+"+fraction2+"="+fraction3;
         return quiz;
@@ -469,14 +499,13 @@ public class Quizs {
         while(num1>num2){
             num2=getNumInRange(2,9);
         }
-        fraction1=num1+"/"+num2;
+        fraction1=setFraction(num1,num2);
         num1=getNumInRange(1,9);
         num2=getNumInRange(2,9);
-        while(num1>num2){
+        while(num1>num2||fraction1.equals(num1+"/"+num2)){
             num2=getNumInRange(2,9);
         }
-        fraction2=num1+"/"+num2;
-        FractionCal f=new FractionCal();
+        fraction2=setFraction(num1,num2);//num1+"/"+num2;
         fraction3=f.compute(fraction1,"+",fraction2);
         quiz=fraction1+"+"+fraction2+"="+fraction3;
         return quiz;
@@ -493,7 +522,6 @@ public class Quizs {
         }
         fraction1=num1+"/"+num3;
         fraction2=num2+"/"+num3;
-        FractionCal f=new FractionCal();
         fraction3=f.compute(fraction1,"-",fraction2);
         quiz=fraction1+"-"+fraction2+"="+fraction3;
         return quiz;
@@ -502,14 +530,13 @@ public class Quizs {
     public String GradeFiveMinus1(){//分子为1的分数减法
         num1=getNumInRange(2,9);
         num2=getNumInRange(2,9);
-        if(num1<num2){
+        if(num1>num2){
             tmp=num1;
             num1=num2;
             num2=tmp;
         }
         fraction1="1"+"/"+num1;
-        fraction1="1"+"/"+num2;
-        FractionCal f=new FractionCal();
+        fraction2="1"+"/"+num2;
         fraction3=f.compute(fraction1,"-",fraction2);
         quiz=fraction1+"-"+fraction2+"="+fraction3;
         return quiz;
@@ -530,7 +557,6 @@ public class Quizs {
         }
         fraction1=num1+"/"+num3;
         fraction2=num2+"/"+num4;
-        FractionCal f=new FractionCal();
         fraction3=f.compute(fraction1,"-",fraction2);
         quiz=fraction1+"-"+fraction2+"="+fraction3;
         return quiz;
@@ -601,51 +627,207 @@ public class Quizs {
         return quiz;
     }
 
-    public String GradeSixPlus0(){//分数加法交换律
+    public String GradeSixPlus0(){//分数加法交换律a+b+c=a+c+b
+        fraction1=1+"/"+1;//a+c
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction2=num1+"/"+num2;//a
+        fraction3=f.compute(fraction1,"-",fraction2);//c
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction4=num1+"/"+num2;//b
+        answerStr=f.compute((f.compute(fraction2,"+",fraction4)),"+",fraction3);
+        quiz=fraction2+"+"+fraction4+"+"+fraction3+"="+answerStr;
         return quiz;
     }
 
-    public String GradeSixPlus1(){//分数加法结合律
+    public String GradeSixPlus1(){//分数加法结合律a+b+c=a+(b+c)
+        fraction1=1+"/"+1;//b+c
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction2=num1+"/"+num2;//b
+        fraction3=f.compute(fraction1,"-",fraction2);//c
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction4=num1+"/"+num2;//a
+        answerStr=f.compute((f.compute(fraction2,"+",fraction4)),"+",fraction3);
+        quiz=fraction4+"+"+fraction2+"+"+fraction3+"="+answerStr;
         return quiz;
     }
 
     public String GradeSixPlus2(){//负数加法
+        num1=getNumInRange(1,20)*(-1);
+        num2=getNumInRange(1,2);
+        if(num2==1){
+            num2=-1;
+        }
+        else {
+            num2=1;
+        }
+        num3=getNumInRange(1,20)*num2;
+        answer=num1+num3;
+        quiz=num1+"+"+num3+"="+answer;
         return quiz;
     }
 
-    public String GradeSixMinus0(){//分数减法性质
+    public String GradeSixMinus0(){//分数减法性质a-b-c=a-c-b
+        fraction1=1+"/"+1;//a-c
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction2=num1+"/"+num2;//c
+        fraction3=f.compute(fraction1,"+",fraction2);//a
+        num3=getNumInRange(1,9);
+        num4=getNumInRange(2,9);
+        while(num3>=num4){
+            num3=getNumInRange(1,9);
+        }
+        fraction4=num3+"/"+num4;//b
+        answerStr=f.compute((f.compute(fraction3,"-",fraction4)),"-",fraction2);
+        quiz=fraction3+"-"+fraction4+"-"+fraction2+"="+answerStr;
         return quiz;
     }
 
-    public String GradeSixMinus1(){//分数减法性质
+    public String GradeSixMinus1(){//分数减法性质a-b-c=a-(b+c)
+        fraction1=1+"/"+1;//b+c
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction2=num1+"/"+num2;//c
+        fraction3=f.compute(fraction1,"-",fraction2);//b
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1<num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction4=num1+"/"+num2;//a
+        answerStr=f.compute((f.compute(fraction4,"-",fraction3)),"-",fraction2);
+        quiz=fraction4+"-"+fraction3+"-"+fraction2+"="+answerStr;
         return quiz;
     }
 
     public String GradeSixMinus2(){//负数减法
+        num1=getNumInRange(1,20)*(-1);
+        num2=getNumInRange(1,2);
+        if(num2==1){
+            num2=-1;
+        }
+        else {
+            num2=1;
+        }
+        num3=getNumInRange(1,20)*num2;
+        answer=num2-num1;
+        quiz=num2+"-("+num1+")="+answer;
         return quiz;
     }
 
     public String GradeSixMul0(){//分数乘整数
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction1=setFraction(num1,num2);
+        num1=getNumInRange(2,5);//整数
+        fraction2=num1*num2+"/"+num2;//整数化为分数
+        answerStr=f.compute(fraction1,"*",fraction2);
+        quiz=fraction1+"*"+num1+"="+answerStr;
         return quiz;
     }
 
     public String GradeSixMul1(){//分数乘分数
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction1=setFraction(num1,num2);
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction2=setFraction(num1,num2);
+        answerStr=f.compute(fraction1,"*",fraction2);
+        quiz=fraction1+"*"+fraction2+"="+answerStr;
         return quiz;
     }
 
     public String GradeSixMul2(){//分数乘小数
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction1=setFraction(num1,num2);
+        num3=getNumInRange(1,9);
+        dbl1=num3*0.1;
+        fraction2=setFraction(num3,10);//小数化为分数
+        answerStr=f.compute(fraction1,"*",fraction2);
+        quiz=fraction1+"*"+dbl1+"="+answerStr;
         return quiz;
     }
 
     public String GradeSixDiv0(){//分数除整数
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction1=setFraction(num1,num2);//商
+        num1=getNumInRange(2,5);//整数
+        fraction2=num1*num2+"/"+num2;//整数化为分数
+        fraction3=f.compute(fraction1,"*",fraction2);//被除数
+        quiz=fraction3+"/"+num1+"="+fraction1;
         return quiz;
     }
 
     public String GradeSixDiv1(){//分数除分数
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction1=setFraction(num1,num2);
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction2=setFraction(num1,num2);
+        answerStr=f.compute(fraction1,"/",fraction2);
+        quiz=fraction1+"/"+fraction2+"="+answerStr;
         return quiz;
     }
 
-    public String GradeSixDiv2(){//分数除整数
+    public String GradeSixDiv2(){//分数除小数
+        num1=getNumInRange(1,9);
+        num2=getNumInRange(2,9);
+        while(num1>=num2){
+            num1=getNumInRange(1,9);
+        }
+        fraction1=setFraction(num1,num2);
+        num3=getNumInRange(1,9);
+        dbl1=num3*0.1;
+        fraction2=setFraction(num3,10);//小数化为分数
+        answerStr=f.compute(fraction1,"/",fraction2);
+        quiz=fraction1+"/"+dbl1+"="+answerStr;
         return quiz;
     }
 
