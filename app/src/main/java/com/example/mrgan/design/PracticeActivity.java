@@ -111,10 +111,6 @@ public class PracticeActivity extends AppCompatActivity {
         lastTextView = findViewById(R.id.last);
         nextTextView = findViewById(R.id.next);
 
-        NiceSpinner niceSpinner = (NiceSpinner) findViewById(R.id.nice_spinner);
-        List<String> dataset = new LinkedList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
-        niceSpinner.attachDataSource(dataset);
-        
 
         //接收数据
         intent = getIntent();
