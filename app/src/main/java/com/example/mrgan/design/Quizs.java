@@ -92,8 +92,8 @@ public class Quizs {
 
     ////////////////一年级
     public String GradeOnePlus0() {//一位数加法
-        num1 = getNumInRange(0, 9);
-        num2 = getNumInRange(0, 9);
+        num1 = getNumInRange(1, 9);
+        num2 = getNumInRange(1, 9);
         swap();
         answer = num1 + num2;
         quiz = num1 + " + " + num2 + " =" + answer;
@@ -102,7 +102,7 @@ public class Quizs {
 
     public String GradeOnePlus1() {//十加几
         num1 = 10;
-        num2 = getNumInRange(0, 9);
+        num2 = getNumInRange(1, 9);
         swap();
         answer = num1 + num2;
         quiz = num1 + " + " + num2 + " =" + answer;
@@ -137,8 +137,8 @@ public class Quizs {
     }
 
     public String GradeOneMinus0() {//一位数减法
-        num1 = getNumInRange(0, 9);
-        num2 = getNumInRange(0, 9);
+        num1 = getNumInRange(1, 9);
+        num2 = getNumInRange(1, 9);
         if (num2 > num1) {
             num2 = num2 - num1;
             num1 = num1 + num2;
@@ -151,7 +151,7 @@ public class Quizs {
 
     public String GradeOneMinus1() {//十减一位数
         num1 = 10;
-        num2 = getNumInRange(0, 9);
+        num2 = getNumInRange(1, 9);
         answer = num1 - num2;
         quiz = num1 + " - " + num2 + " =" + answer;
         return quiz;
@@ -187,9 +187,9 @@ public class Quizs {
     /////////////二年级
 
     public String GradeTwoPlus0() {//一位数连加
-        num1 = getNumInRange(0, 9);
-        num2 = getNumInRange(0, 9);
-        num3 = getNumInRange(0, 9);
+        num1 = getNumInRange(1, 9);
+        num2 = getNumInRange(1, 9);
+        num3 = getNumInRange(1, 9);
         answer = num1 + num2 + num3;
         quiz = num1 + " + " + num2 + " + " + num3 + " =" + answer;
         return quiz;
@@ -220,9 +220,9 @@ public class Quizs {
     }
 
     public String GradeTwoMinus0() {//一位数连减
-        num1 = getNumInRange(0, 9);
-        num2 = getNumInRange(0, 9);
-        num3 = getNumInRange(0, 9);
+        num1 = getNumInRange(1, 9);
+        num2 = getNumInRange(1, 9);
+        num3 = getNumInRange(1, 9);
         tmp = num1 + num2 + num3;
         answer = tmp - num1 - num2;
         quiz = tmp + " - " + num1 + " - " + num2 + " =" + answer;
@@ -254,27 +254,33 @@ public class Quizs {
     }
 
     public String GradeTwoMul0() {//一位数乘一位数
-        num1 = getNumInRange(0, 9);
-        num2 = getNumInRange(0, 9);
+        num1 = getNumInRange(1, 9);
+        num2 = getNumInRange(1, 9);
         answer = num1 * num2;
         quiz = num1 + " × " + num2 + " =" + answer;
         return quiz;
     }
 
     public String GradeTwoMul1() {//一位数乘一位数加一位数
-        num1 = getNumInRange(0, 9);
-        num2 = getNumInRange(0, 9);
+        num1 = getNumInRange(1, 9);
+        num2 = getNumInRange(1, 9);
         num3 = getNumInRange(1, 9);
         answer = num1 * num2 + num3;
-        quiz = num1 + " × " + num2 + " + " + num3 + " =" + answer;
+        ran = (int) (Math.random() * 2);
+        if (ran == 1)
+            quiz = num3 + " + " + num1 + " × " + num2 + " =" + answer;
+        else
+            quiz = num1 + " × " + num2 + " + " + num3 + " =" + answer;
         return quiz;
     }
 
     public String GradeTwoMul2() {//一位数乘一位数减一位数
-        num1 = getNumInRange(0, 9);
-        num2 = getNumInRange(0, 9);
+        num1 = getNumInRange(1, 9);
+        num2 = getNumInRange(1, 9);
         num3 = getNumInRange(1, 9);
-        if ((num1 * num2) < num3) {
+        while ((num1 * num2) < num3) {
+            num1 = getNumInRange(1, 9);
+            num2 = getNumInRange(1, 9);
             num3 = getNumInRange(1, 9);
         }
         answer = num1 * num2 - num3;
@@ -297,7 +303,11 @@ public class Quizs {
         tmp = num1 * num2;//被除数
         num3 = getNumInRange(1, 9);//加数
         answer = tmp / num1 + num3;
-        quiz = tmp + " ÷ " + num1 + " + " + num3 + " =" + answer;
+        ran = (int) (Math.random() * 2);
+        if (ran == 1)
+            quiz = tmp + " ÷ " + num1 + " + " + num3 + " =" + answer;
+        else
+            quiz = num3 + " + " + tmp + " ÷ " + num1 + " =" + answer;
         return quiz;
     }
 
@@ -540,7 +550,7 @@ public class Quizs {
         }
         tmp = num2 - num3;//b
         answer = num1 * tmp + num1 * num3;
-        quiz = num1 + " × " + tmp + " + " + num1 + " × " + num3 + " =" + answer;
+        quiz = num1 + "×" + tmp + "+" + num1 + "×" + num3 + "=" + answer;
         return quiz;
     }
 
@@ -694,7 +704,11 @@ public class Quizs {
         dbl1 = getDoubleInRange2(0.1, 9.9);
         num1 = getNumInRange(2, 9);
         answerDbl = Double.parseDouble(decimalFormat2.format(dbl1)) * num1;
-        quiz = decimalFormat2.format(dbl1) + " × " + num1 + " =" + decimalFormat2.format(answerDbl);
+        ran = (int) (Math.random() * 2);
+        if (ran == 1)
+            quiz = decimalFormat2.format(dbl1) + " × " + num1 + " =" + decimalFormat2.format(answerDbl);
+        else
+            quiz = num1 + " × " + decimalFormat2.format(dbl1) + " =" + decimalFormat2.format(answerDbl);
         return quiz;
     }
 
@@ -703,7 +717,11 @@ public class Quizs {
         dbl2 = getDoubleInRange1(0.1, 0.9);
         answerDbl = Double.parseDouble(decimalFormat2.format(dbl1)) * Double.parseDouble(decimalFormat2.format(dbl2));
         answerStr = decimalFormat.format(answerDbl);
-        quiz = decimalFormat2.format(dbl1) + " × " + decimalFormat2.format(dbl2) + " =" + answerStr;
+        ran = (int) (Math.random() * 2);
+        if (ran == 1)
+            quiz = decimalFormat2.format(dbl1) + " × " + decimalFormat2.format(dbl2) + " =" + answerStr;
+        else
+            quiz = decimalFormat2.format(dbl2) + " × " + decimalFormat2.format(dbl1) + " =" + answerStr;
         return quiz;
     }
 
@@ -760,7 +778,7 @@ public class Quizs {
         }
         fraction4 = setFraction(num1, num2);//b
         answerStr = f.compute(fraction1, "+", fraction4);
-        quiz = fraction2 + " + " + fraction4 + " + " + fraction3 + " =" + answerStr;
+        quiz = fraction2 + "+" + fraction4 + "+" + fraction3 + "=" + answerStr;
         return quiz;
     }
 
@@ -780,7 +798,7 @@ public class Quizs {
         }
         fraction4 = setFraction(num1, num2);//a
         answerStr = f.compute(fraction1, "+", fraction4);
-        quiz = fraction4 + " + " + fraction2 + " + " + fraction3 + " =" + answerStr;
+        quiz = fraction4 + "+" + fraction2 + "+" + fraction3 + "=" + answerStr;
         return quiz;
     }
 
@@ -818,8 +836,8 @@ public class Quizs {
             num4 = getNumInRange(2, 9);
         }
         fraction4 = setFraction(num3, num4);//b
-        answerStr = f.compute(fraction1, "-", fraction2);
-        quiz = fraction3 + " - " + fraction4 + " - " + fraction2 + " =" + answerStr;
+        answerStr = f.compute(fraction1, "-", fraction4);
+        quiz = fraction3 + "-" + fraction4 + "-" + fraction2 + "=" + answerStr;
         return quiz;
     }
 
@@ -841,7 +859,7 @@ public class Quizs {
         }
         fraction4 = setFraction(num1, num2);//a
         answerStr = f.compute(fraction4, "-", fraction1);
-        quiz = fraction4 + " - " + fraction3 + " - " + fraction2 + " =" + answerStr;
+        quiz = fraction4 + "-" + fraction3 + "-" + fraction2 + "=" + answerStr;
         return quiz;
     }
 
@@ -870,7 +888,11 @@ public class Quizs {
         num1 = getNumInRange(2, 9);//整数
         fraction2 = num1 * num2 + "/" + num2;//整数化为分数
         answerStr = f.compute(fraction1, "*", fraction2);
-        quiz = fraction1 + " × " + num1 + " =" + answerStr;
+        ran = (int) (Math.random() * 2);
+        if (ran == 1)
+            quiz = fraction1 + " × " + num1 + " =" + answerStr;
+        else
+            quiz = num1 + " × " + fraction1 + " =" + answerStr;
         return quiz;
     }
 
@@ -906,7 +928,11 @@ public class Quizs {
         dbl1 = num3 * 0.1;
         fraction2 = setFraction(num3, 10);//小数化为分数
         answerStr = f.compute(fraction1, "*", fraction2);
+        ran = (int) (Math.random() * 2);
+        if (ran == 1)
         quiz = fraction1 + " × " + decimalFormat2.format(dbl1) + " =" + answerStr;
+        else
+            quiz = decimalFormat2.format(dbl1) + " × " + fraction1 + " =" + answerStr;
         return quiz;
     }
 

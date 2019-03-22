@@ -49,6 +49,12 @@ public class QuizGive {
                     case 2:
                         equation=new Quizs().GradeOnePlus2();
                         break;
+                    case 3:
+                        equation=new Quizs().GradeOnePlus3();
+                        break;
+                    case 4:
+                        equation=new Quizs().GradeOnePlus4();
+                        break;
                 }
                 break;
             case "减法":
@@ -63,10 +69,10 @@ public class QuizGive {
                         equation=new Quizs().GradeOneMinus2();
                         break;
                     case 3:
-                        equation=new Quizs().GradeOnePlus3();
+                        equation=new Quizs().GradeOneMinus3();
                         break;
                     case 4:
-                        equation=new Quizs().GradeOnePlus4();
+                        equation=new Quizs().GradeOneMinus4();
                         break;
                 }
                 break;
