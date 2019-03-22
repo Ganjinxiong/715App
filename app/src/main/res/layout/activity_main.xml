@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:text="每日一练"
+            android:text="口算题库"
             android:textSize="48dp" />
 
         <TextView

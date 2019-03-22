@@ -135,7 +135,7 @@ public class ExamActivity extends AppCompatActivity {
         type = randomType(grade);
         answerEditText.setText("");
         quizGive = new QuizGive(grade, type, nowLevel);
-        question = quizGive.give();
+        question = quizGive.Give();
         questionItem = question.split("=");
         questionStr = questionItem[0] + "=";
         questionTextView.setText(questionStr);

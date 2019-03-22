@@ -75,7 +75,6 @@
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/fangkuang3"
                 android:gravity="center"
-                android:inputType="numberDecimal"
                 android:text=""
                 android:textSize="35sp" />
 
@@ -96,5 +95,11 @@
             android:text="7+8=?"
             android:textSize="30sp"
             android:textColor="@android:color/darker_gray"/>
+
+        <org.angmarch.views.NiceSpinner
+            android:id="@+id/nice_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

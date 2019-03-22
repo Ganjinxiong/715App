@@ -119,7 +119,6 @@
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/fangkuang3"
                 android:gravity="center"
-                android:inputType="numberDecimal"
                 android:text="99.99"
                 android:textSize="35sp" />
 

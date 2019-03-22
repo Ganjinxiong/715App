@@ -19,7 +19,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.angmarch.views.NiceSpinner;
+
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -50,7 +55,7 @@ public class PracticeActivity extends AppCompatActivity {
         if (isfirst) {
             Log.d("aaa",grade+type+nowLevel);
             quizGive = new QuizGive(grade,type,nowLevel);
-            question = quizGive.give();
+            question = quizGive.Give();
             questionItem = question.split("=");
             questionStr = questionItem[0]+"=";
             oldStr =questionStr;//错题用
@@ -66,7 +71,7 @@ public class PracticeActivity extends AppCompatActivity {
         result = questionItem[1];
         //下一题
         quizGive = new QuizGive(grade,type,nowLevel);
-        question = quizGive.give();
+        question = quizGive.Give();
         questionItem = question.split("=");
         questionStr = questionItem[0]+"=";
         nextTextView.setText(questionStr+"?");
@@ -106,6 +111,10 @@ public class PracticeActivity extends AppCompatActivity {
         lastTextView = findViewById(R.id.last);
         nextTextView = findViewById(R.id.next);
 
+        NiceSpinner niceSpinner = (NiceSpinner) findViewById(R.id.nice_spinner);
+        List<String> dataset = new LinkedList<>(Arrays.asList("One", "Two", "Three", "Four", "Five"));
+        niceSpinner.attachDataSource(dataset);
+        
 
         //接收数据
         intent = getIntent();

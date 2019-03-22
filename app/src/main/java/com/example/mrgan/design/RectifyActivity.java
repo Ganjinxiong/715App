@@ -31,7 +31,7 @@ public class RectifyActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private Button exitButton, skipButton;
     private EditText answerEditText;
-    private ImageView judgeImage;
+    private ImageView judgeImage,judgeImage2;
     private TextView oldquestionTextView, oldanswerTextView;
     private Handler handler;
     private Message message;
@@ -45,6 +45,9 @@ public class RectifyActivity extends AppCompatActivity {
             Question question = (Question) iterator.next();
             oldquestionTextView.setText(question.getqString());
             oldanswerTextView.setText(question.getAnswer());
+            if (question.getAnswer().equals("?"))
+                judgeImage2.setVisibility(View.GONE);
+            else judgeImage2.setVisibility(View.VISIBLE);
             result = question.getResult();
         } else {
             questionList = LitePal.where("grade like ?", grade).find(Question.class);
@@ -105,6 +108,7 @@ public class RectifyActivity extends AppCompatActivity {
         skipButton = findViewById(R.id.skip3);
         answerEditText = findViewById(R.id.answer3);
         judgeImage = findViewById(R.id.judge3);
+        judgeImage2 = findViewById(R.id.judge4);
         oldquestionTextView = findViewById(R.id.oldquestion);
         oldanswerTextView = findViewById(R.id.oldanswer);
 
