@@ -2,26 +2,17 @@ package com.example.mrgan.design;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.Handler;
-import android.os.Message;
-import android.os.SystemClock;
+import android.media.MediaPlayer;
 import android.os.Vibrator;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.lang.ref.WeakReference;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -176,7 +167,7 @@ public class ExamActivity extends AppCompatActivity {
         trueCount = 0;
         //第几题
         totalCount = 1;
-       createQuestion();
+        createQuestion();
         wrong = false;
         startTime = System.currentTimeMillis();
 

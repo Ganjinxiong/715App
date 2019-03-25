@@ -2,7 +2,7 @@ package com.example.mrgan.design;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -19,12 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.angmarch.views.NiceSpinner;
-
 import java.lang.ref.WeakReference;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -32,7 +27,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 public class PracticeActivity extends AppCompatActivity {
 
     private Intent intent;
-    private String grade, type,question,questionStr,oldStr,result, answer;
+    private String grade, type, question, questionStr, oldStr, result, answer;
     private String[] questionItem;
     private int maxLevel, minLevel, nowLevel, correct;
     private TextView nowTextView, lastTextView, nextTextView;
@@ -44,37 +39,37 @@ public class PracticeActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private Boolean isfirst;
     private QuizGive quizGive;
-
+    private MediaPlayer mediaPlayer;
 
 
     @SuppressLint("SetTextI18n")
-    public void createQuestion(){
+    public void createQuestion() {
         answerEditText.setText("");
         answer = "xxx";
         //是否第一次出题，是就出两次题，不显示上次的题目
         if (isfirst) {
-            Log.d("aaa",grade+type+nowLevel);
-            quizGive = new QuizGive(grade,type,nowLevel);
+            Log.d("aaa", grade + type + nowLevel);
+            quizGive = new QuizGive(grade, type, nowLevel);
             question = quizGive.Give();
             questionItem = question.split("=");
-            questionStr = questionItem[0]+"=";
-            oldStr =questionStr;//错题用
+            questionStr = questionItem[0] + "=";
+            oldStr = questionStr;//错题用
             nowTextView.setText(questionStr);
             isfirst = false;
         } else {
             judgeImage.setImageResource(R.drawable.xie2);
             lastTextView.setText(nowTextView.getText().toString() + result);
-            oldStr =questionStr;//错题用
+            oldStr = questionStr;//错题用
             nowTextView.setText(questionStr);
         }
         //本题答案
         result = questionItem[1];
         //下一题
-        quizGive = new QuizGive(grade,type,nowLevel);
+        quizGive = new QuizGive(grade, type, nowLevel);
         question = quizGive.Give();
         questionItem = question.split("=");
-        questionStr = questionItem[0]+"=";
-        nextTextView.setText(questionStr+"?");
+        questionStr = questionItem[0] + "=";
+        nextTextView.setText(questionStr + "?");
     }
 
     static class MyHandler extends Handler {
@@ -124,7 +119,6 @@ public class PracticeActivity extends AppCompatActivity {
         nowLevel = minLevel;
 
 
-
         //隐藏标题栏
         actionBar = getSupportActionBar();
         if (actionBar != null)
@@ -133,7 +127,7 @@ public class PracticeActivity extends AppCompatActivity {
         //初始化题目
         handler = new MyHandler(this);
         isfirst = true;
-        correct = 0 ;
+        correct = 0;
         createQuestion();
 
 
@@ -155,8 +149,8 @@ public class PracticeActivity extends AppCompatActivity {
                     answer = s.toString();
                     if (answer.equals(result)) {
                         judgeImage.setImageResource(R.drawable.dui);
-                        correct ++;
-                        if (correct >=5 && nowLevel<maxLevel){
+                        correct++;
+                        if (correct >= 5 && nowLevel < maxLevel) {
                             correct = 0;
                             nowLevel++;
                         }
@@ -180,8 +174,8 @@ public class PracticeActivity extends AppCompatActivity {
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                correct = 0 ;
-                if (nowLevel>minLevel){
+                correct = 0;
+                if (nowLevel > minLevel) {
                     nowLevel--;
                 }
                 Question question = new Question();
@@ -226,7 +220,7 @@ public class PracticeActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         //点击返回键调用方法
-        if(keyCode==KeyEvent.KEYCODE_BACK){
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
             new SweetAlertDialog(PracticeActivity.this, SweetAlertDialog.WARNING_TYPE)
                     .setTitleText("要退出练习吗？")
                     .setCancelText("是，退出练习")

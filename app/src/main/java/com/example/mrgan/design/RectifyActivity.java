@@ -1,6 +1,7 @@
 package com.example.mrgan.design;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
@@ -116,6 +117,7 @@ public class RectifyActivity extends AppCompatActivity {
         questionList = LitePal.where("grade like ?", grade).find(Question.class);
         iterator = questionList.iterator();
         createQuestion();
+
 
         //判断对错，进行下一题
         answerEditText.addTextChangedListener(new TextWatcher() {
