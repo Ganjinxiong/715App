@@ -32,12 +32,12 @@ public class RectifyActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private Button exitButton, skipButton;
     private EditText answerEditText;
-    private ImageView judgeImage,judgeImage2;
+    private ImageView judgeImage, judgeImage2;
     private TextView oldquestionTextView, oldanswerTextView;
     private Handler handler;
     private Message message;
-    private List<Question> questionList,questionList2;
-    private Iterator iterator,iterator2;
+    private List<Question> questionList, questionList2;
+    private Iterator iterator, iterator2;
 
     private void createQuestion() {
         if (iterator.hasNext()) {
@@ -54,8 +54,8 @@ public class RectifyActivity extends AppCompatActivity {
             questionList = LitePal.where("grade like ?", grade).find(Question.class);
             iterator = questionList.iterator();
             if (iterator.hasNext()) {
-               createQuestion();
-            }else {
+                createQuestion();
+            } else {
                 new SweetAlertDialog(RectifyActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                         .setTitleText("该年级的错题已纠正")
                         .setConfirmText("退出纠正")
@@ -137,7 +137,8 @@ public class RectifyActivity extends AppCompatActivity {
                     answer = s.toString();
                     if (answer.equals(result)) {
                         judgeImage.setImageResource(R.drawable.dui);
-                        LitePal.deleteAll(Question.class, "qString = ?", oldquestionTextView.getText().toString());
+                        LitePal.deleteAll(Question.class, "qString = ?",
+                                oldquestionTextView.getText().toString());
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -157,11 +158,12 @@ public class RectifyActivity extends AppCompatActivity {
         skipButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                questionList2 = LitePal.where("grade like ?", grade).find(Question.class);
+                questionList2 = LitePal.where("grade like ?", grade)
+                        .find(Question.class);
                 iterator2 = questionList.iterator();
                 iterator2.next();
                 if (iterator2.hasNext())
-                createQuestion();
+                    createQuestion();
                 else {
                     new SweetAlertDialog(RectifyActivity.this, SweetAlertDialog.SUCCESS_TYPE)
                             .setTitleText("这是最后一题了")

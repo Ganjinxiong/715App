@@ -52,7 +52,7 @@ public class PracticeActivity extends AppCompatActivity {
             quizGive = new QuizGive(grade, type, nowLevel);
             question = quizGive.Give();
             questionItem = question.split("=");
-            questionStr = questionItem[0] + "=";
+            questionStr = questionItem[0] + "=";//题目
             oldStr = questionStr;//错题用
             nowTextView.setText(questionStr);
             isfirst = false;
@@ -133,6 +133,7 @@ public class PracticeActivity extends AppCompatActivity {
 
         //判断对错，进行下一题
         answerEditText.addTextChangedListener(new TextWatcher() {
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -193,7 +194,7 @@ public class PracticeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new SweetAlertDialog(PracticeActivity.this, SweetAlertDialog.WARNING_TYPE)
-                        .setTitleText("要退出练习吗？")
+                        .setTitleText("要退出练习吗？")//标题
                         .setCancelText("是，退出练习")
                         .setConfirmText("不，继续练习")
                         .showCancelButton(true)

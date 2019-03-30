@@ -73,7 +73,7 @@
                             android:layout_weight="1"
                             android:gravity="center_vertical"
                             android:paddingLeft="5dp"
-                            android:text="口算练习"
+                            android:text="分类练习"
                             android:textColor="@android:color/black"
                             android:textSize="30sp" />
                     </LinearLayout>

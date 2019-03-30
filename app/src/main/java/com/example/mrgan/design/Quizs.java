@@ -20,7 +20,7 @@ public class Quizs {
     }
 
     //随机交换数字位置
-    public void swap() {
+    private void swap() {
         ran = (int) (Math.random() * 2);
         if (ran == 1) {
             num1 = num1 + num2;
@@ -38,9 +38,8 @@ public class Quizs {
         return result / 100;
     }
 
-    public int getNumInRange(int min, int max) {//获得[min,max]内的随机数
-        int result = (int) (min + Math.random() * (max - min + 1));
-        return result;
+    private int getNumInRange(int min, int max) {//获得[min,max]内的随机数
+        return (int) (min + Math.random() * (max - min + 1));
     }
 
     public String setFraction(int a, int b) {//设置分子和分母，可约分则进行约分
@@ -91,10 +90,9 @@ public class Quizs {
 
 
     ////////////////一年级
-    public String GradeOnePlus0() {//一位数加法
+    String GradeOnePlus0() {//一位数加法
         num1 = getNumInRange(1, 9);
         num2 = getNumInRange(1, 9);
-        swap();
         answer = num1 + num2;
         quiz = num1 + " + " + num2 + " =" + answer;
         return quiz;

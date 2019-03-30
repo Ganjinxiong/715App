@@ -1,18 +1,18 @@
 package com.example.mrgan.design;
 
-public class QuizGive {
+class QuizGive {
     private String gradeLabel, typeLabel;
     private int Level=0;
-    String quiz="";
-    String equation ="";
+    private String quiz="";
+    private String equation ="";
 
-    public QuizGive(String label1, String label2,int level) {
+    QuizGive(String label1, String label2, int level) {
         gradeLabel = label1;
         typeLabel = label2;
         Level=level;
     }
 
-    public String Give() {
+    String Give() {
         switch (gradeLabel) {
             case "一年级":
                 quiz = GradeOne();
@@ -36,7 +36,7 @@ public class QuizGive {
         return quiz;
     }
 
-    public String GradeOne() {
+    private String GradeOne() {
         switch (typeLabel) {
             case "加法":
                 switch(Level){
@@ -80,7 +80,7 @@ public class QuizGive {
         return equation;
     }
 
-    public String GradeTwo(){
+    private String GradeTwo(){
         switch (typeLabel) {
             case "加法":
                 switch(Level){
